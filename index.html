@@ -3,287 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Welcome to Game Arcade Hub - Your ultimate destination for thrilling space-themed games!">
-  <meta name="keywords" content="game arcade, space dodge, alien shooter, cosmic race, star puzzle, online games">
+  <meta name="description" content="Game Arcade Hub - भारत के लिए रोमांचक अंतरिक्ष थीम वाले गेम्स का केंद्र!">
+  <meta name="keywords" content="game arcade, space dodge, alien shooter, cosmic race, star puzzle, online games, भारत गेमिंग">
   <meta name="author" content="Game Arcade Team">
   <title>Game Arcade Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(to bottom, #0a0a2a, #1a1a4a);
-      font-family: 'Arial', sans-serif;
-      color: #fff;
-      overflow-x: hidden;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    header {
-      width: 100%;
-      max-width: 1200px;
-      padding: clamp(10px, 2vw, 20px);
-      text-align: center;
-      text-shadow: 0 0 10px #0ff;
-      position: relative;
-    }
-    h1 {
-      font-size: clamp(24px, 5vw, 48px);
-      margin: 0;
-    }
-    nav {
-      margin: clamp(10px, 2vw, 20px) 0;
-      display: flex;
-      justify-content: center;
-      gap: clamp(10px, 2vw, 20px);
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: clamp(14px, 2vw, 18px);
-      padding: clamp(5px, 1vw, 10px);
-      border-radius: 5px;
-      transition: background 0.3s, color 0.3s;
-    }
-    nav a:hover {
-      background: #0ff;
-      color: #0a0a2a;
-    }
-    .game-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: clamp(15px, 3vw, 30px);
-      width: 100%;
-      max-width: 1200px;
-      padding: clamp(10px, 2vw, 20px);
-      box-sizing: border-box;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
     .game-card {
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid #fff;
-      border-radius: 10px;
-      width: clamp(200px, 30vw, 300px);
-      padding: clamp(10px, 2vw, 20px);
-      text-align: center;
+      animation: fadeIn 0.5s ease-out;
+      background-size: cover;
+      background-position: center;
       transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      position: relative;
     }
     .game-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px #0ff;
+      box-shadow: 0 0 20px rgba(255, 183, 77, 0.8);
     }
-    .game-card h2 {
-      font-size: clamp(18px, 3vw, 24px);
-      margin: 10px 0;
-      color: #0ff;
+    .modal {
+      animation: fadeIn 0.3s ease-out;
     }
-    .game-card p {
-      font-size: clamp(12px, 2vw, 16px);
-      color: #ddd;
+    .bg-pattern {
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"%3E%3Ccircle cx="10" cy="10" r="1" fill="white"/%3E%3Ccircle cx="50" cy="20" r="1.5" fill="white"/%3E%3Ccircle cx="80" cy="30" r="1" fill="white"/%3E%3Ccircle cx="30" cy="60" r="1.2" fill="white"/%3E%3Ccircle cx="70" cy="80" r="1" fill="white"/%3E%3C/svg%3E');
+      background-size: 80px;
+      background-repeat: repeat;
     }
-    .game-card .difficulty {
-      font-size: clamp(10px, 1.5vw, 14px);
-      color: #0f0;
-      margin: 5px 0;
-    }
-    .game-card .high-score {
-      font-size: clamp(10px, 1.5vw, 14px);
-      color: #ff0;
-      margin: 5px 0;
-    }
-    button {
-      padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 24px);
-      font-size: clamp(14px, 2vw, 18px);
-      background: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
-    }
-    button:hover {
-      background: #45a049;
-      transform: scale(1.05);
-    }
-    .settings-panel, .leaderboard, .profile-panel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.9);
-      padding: clamp(15px, 3vw, 30px);
-      border-radius: 15px;
-      box-shadow: 0 0 30px #0ff;
-      display: none;
-      width: 80%;
-      max-width: 500px;
-      z-index: 10;
-    }
-    .settings-panel h2, .leaderboard h2, .profile-panel h2 {
-      font-size: clamp(18px, 3vw, 24px);
-      color: #0ff;
-      margin: 0 0 15px 0;
-    }
-    .settings-panel label, .profile-panel label {
-      display: block;
-      font-size: clamp(12px, 2vw, 16px);
-      margin: 10px 0 5px;
-    }
-    .settings-panel input, .profile-panel input {
-      width: 100%;
-      padding: clamp(5px, 1vw, 10px);
-      border-radius: 5px;
-      border: 1px solid #fff;
-      background: #222;
-      color: #fff;
-      font-size: clamp(12px, 2vw, 16px);
-    }
-    .leaderboard ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .leaderboard li {
-      font-size: clamp(12px, 2vw, 16px);
-      padding: 5px 0;
-      border-bottom: 1px solid #444;
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #f00;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-    footer {
-      width: 100%;
-      max-width: 1200px;
-      padding: clamp(10px, 2vw, 20px);
-      text-align: center;
-      font-size: clamp(12px, 2vw, 16px);
-      color: #ddd;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .game-card, .settings-panel, .leaderboard, .profile-panel {
-      animation: fadeIn 0.5s ease-in;
-    }
-    @media (max-width: 600px) {
-      .game-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .game-card {
-        width: 80%;
-        max-width: 400px;
-      }
-      nav {
-        flex-direction: column;
-        gap: 10px;
-      }
+    @font-face {
+      font-family: 'Noto Sans';
+      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Game Arcade Hub</h1>
-    <p>Your Ultimate Destination for Thrilling Space-Themed Games!</p>
-    <nav>
-      <a href="#" onclick="showPanel('settings')">Settings</a>
-      <a href="#" onclick="showPanel('leaderboard')">Leaderboard</a>
-      <a href="#" onclick="showPanel('profile')">Profile</a>
-      <a href="#contact">Contact</a>
+<body class="min-h-screen bg-gradient-to-b from-blue-900 to-orange-900 text-white bg-pattern font-['Noto_Sans']">
+  <header class="w-full max-w-6xl mx-auto px-4 py-6 text-center">
+    <h1 class="text-3xl md:text-5xl font-bold tracking-wide text-orange-300 drop-shadow-lg animate-fadeIn">
+      गेम आर्केड हब
+    </h1>
+    <p class="mt-2 text-base md:text-lg text-gray-200">
+      रोमांचक अंतरिक्ष गेम्स का मजा लें! | Thrilling Space Games for Everyone!
+    </p>
+    <nav class="mt-4 flex justify-center gap-3 flex-wrap">
+      <a href="#" onclick="showPanel('settings')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
+        सेटिंग्स | Settings
+      </a>
+      <a href="#" onclick="showPanel('leaderboard')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
+        लीडरबोर्ड | Leaderboard
+      </a>
+      <a href="#" onclick="showPanel('profile')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
+        प्रोफाइल | Profile
+      </a>
+      <a href="#contact" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
+        संपर्क | Contact
+      </a>
     </nav>
   </header>
-  <div class="game-container">
-    <div class="game-card" onclick="startGame('space-dodge')">
-      <h2>Space Dodge</h2>
-      <p>Navigate your spaceship, dodge asteroids, and collect power-ups to survive and level up!</p>
-      <div class="difficulty">Difficulty: Medium</div>
-      <div class="high-score">High Score: <span id="space-dodge-score">0</span></div>
-      <a href="/game_develoment/space_dodge_game">
-        
-      <button>Play Now</button>
-      </a>
-    </div>
-    <div class="game-card" >
-      <h2>Alien Shooter</h2>
-      <p>Blast waves of alien invaders, upgrade your weapon, and defend the galaxy!</p>
-      <div class="difficulty">Difficulty: Hard</div>
-      <div class="high-score">High Score: <span id="alien-shooter-score">0</span></div>
-        <a href="/game_develoment/alien_shooter">
-      <button>Play Now</button>
-        </a>
-    </div>
-    <div class="game-card" >
-      <h2>Cosmic Race</h2>
-      <p>Race through space, avoid obstacles, and compete for the fastest time!</p>
-      <div class="difficulty">Difficulty: Easy</div>
-      <div class="high-score">High Score: <span id="cosmic-race-score">0</span></div>
-              <a href="/game_develoment/cosmic_race">
 
-      <button>Play Now</button>
-              </a>
+  <main class="w-full max-w-6xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1504198458649-3128b6a7b01a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('space-dodge')">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative z-10">
+          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">स्पेस डॉज | Space Dodge</h2>
+          <p class="text-xs md:text-sm text-gray-300 mb-3">अंतरिक्ष यान चलाएं, उल्कापिंडों से बचें! | Dodge asteroids with your spaceship!</p>
+          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: मध्यम | Difficulty: Medium</div>
+          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="space-dodge-score">0</span> | High Score</div>
+          <a href="space-dodge.html">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
+              अभी खेलें | Play Now
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('alien-shooter')">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative z-10">
+          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">एलियन शूटर | Alien Shooter</h2>
+          <p class="text-xs md:text-sm text-gray-300 mb-3">एलियंस को हराएं, हथियार अपग्रेड करें! | Blast aliens, upgrade weapons!</p>
+          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: कठिन | Difficulty: Hard</div>
+          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="alien-shooter-score">0</span> | High Score</div>
+          <a href="alien-shooter.html">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
+              अभी खेलें | Play Now
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('cosmic-race')">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative z-10">
+          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">कॉस्मिक रेस | Cosmic Race</h2>
+          <p class="text-xs md:text-sm text-gray-300 mb-3">अंतरिक्ष में दौड़ें, बाधाओं से बचें! | Race through space, avoid obstacles!</p>
+          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: आसान | Difficulty: Easy</div>
+          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="cosmic-race-score">0</span> | High Score</div>
+          <a href="cosmic-race.html">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
+              अभी खेलें | Play Now
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('star-puzzle')">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative z-10">
+          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">स्टार पजल | Star Puzzle</h2>
+          <p class="text-xs md:text-sm text-gray-300 mb-3">तारों को सही जगह लगाएं! | Solve cosmic star puzzles!</p>
+          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: मध्यम | Difficulty: Medium</div>
+          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="star-puzzle-score">0</span> | High Score</div>
+          <a href="star-puzzle.html">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
+              अभी खेलें | Play Now
+            </button>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="game-card" onclick="startGame('star-puzzle')">
-      <h2>Star Puzzle</h2>
-      <p>Solve cosmic puzzles, align stars, and unlock new challenges!</p>
-      <div class="difficulty">Difficulty: Medium</div>
-      <div class="high-score">High Score: <span id="star-puzzle-score">0</span></div>
-      
-      <button>Play Now</button>
+  </main>
+
+  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="settings">
+    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
+      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('settings')">X</button>
+      <h2 class="text-2xl font-bold text-orange-300 mb-4">सेटिंग्स | Settings</h2>
+      <label class="block text-sm mb-2">ध्वनि स्तर | Sound Volume:</label>
+      <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3" class="w-full mb-4">
+      <label class="block text-sm mb-2">कठिनाई | Difficulty:</label>
+      <input type="range" id="difficulty" min="1" max="3" step="1" value="2" class="w-full mb-2">
+      <p class="text-sm">कठिनाई: <span id="difficultyLabel">मध्यम | Medium</span></p>
+      <label class="block text-sm mt-4">थीम | Theme:</label>
+      <input type="checkbox" id="theme" checked class="mr-2"> डार्क मोड | Dark Mode
     </div>
   </div>
-  <div class="settings-panel" id="settings">
-    <button class="close-btn" onclick="hidePanel('settings')">X</button>
-    <h2>Settings</h2>
-    <label for="soundVolume">Sound Volume:</label>
-    <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3">
-    <label for="difficulty">Default Difficulty:</label>
-    <input type="range" id="difficulty" min="1" max="3" step="1" value="2">
-    <p>Difficulty: <span id="difficultyLabel">Medium</span></p>
-    <label for="theme">Theme:</label>
-    <input type="checkbox" id="theme" checked> Dark Mode
+
+  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="leaderboard">
+    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
+      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('leaderboard')">X</button>
+      <h2 class="text-2xl font-bold text-orange-300 mb-4">लीडरबोर्ड | Leaderboard</h2>
+      <ul class="list-none p-0">
+        <li class="text-sm py-2 border-b border-gray-600">स्पेस डॉज: खिलाड़ी1 - 1200 | Space Dodge: Player1 - 1200</li>
+        <li class="text-sm py-2 border-b border-gray-600">एलियन शूटर: खिलाड़ी2 - 950 | Alien Shooter: Player2 - 950</li>
+        <li class="text-sm py-2 border-b border-gray-600">कॉस्मिक रेस: खिलाड़ी3 - 300 | Cosmic Race: Player3 - 300</li>
+        <li class="text-sm py-2">स्टार पजल: खिलाड़ी4 - 500 | Star Puzzle: Player4 - 500</li>
+      </ul>
+    </div>
   </div>
-  <div class="leaderboard" id="leaderboard">
-    <button class="close-btn" onclick="hidePanel('leaderboard')">X</button>
-    <h2>Leaderboard</h2>
-    <ul id="leaderboardList">
-      <li>Space Dodge - Player1: 1200</li>
-      <li>Alien Shooter - Player2: 950</li>
-      <li>Cosmic Race - Player3: 300</li>
-      <li>Star Puzzle - Player4: 500</li>
-    </ul>
+
+  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="profile">
+    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
+      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('profile')">X</button>
+      <h2 class="text-2xl font-bold text-orange-300 mb-4">प्रोफाइल | Profile</h2>
+      <label class="block text-sm mb-2">उपयोगकर्ता नाम | Username:</label>
+      <input type="text" id="username" value="Guest" class="w-full p-2 bg-gray-700 text-white rounded-lg mb-4">
+      <label class="block text-sm mb-2">ईमेल | Email:</label>
+      <input type="email" id="email" value="guest@example.com" class="w-full p-2 bg-gray-700 text-white rounded-lg mb-4">
+      <p class="text-sm mb-2">खेले गए गेम: <span id="gamesPlayed">0</span> | Games Played</p>
+      <p class="text-sm mb-4">कुल स्कोर: <span id="totalScore">0</span> | Total Score</p>
+      <button onclick="saveProfile()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300">
+        प्रोफाइल सहेजें | Save Profile
+      </button>
+    </div>
   </div>
-  <div class="profile-panel" id="profile">
-    <button class="close-btn" onclick="hidePanel('profile')">X</button>
-    <h2>User Profile</h2>
-    <label for="username">Username:</label>
-    <input type="text" id="username" value="Guest">
-    <label for="email">Email:</label>
-    <input type="email" id="email" value="guest@example.com">
-    <p>Games Played: <span id="gamesPlayed">0</span></p>
-    <p>Total Score: <span id="totalScore">0</span></p>
-    <button onclick="saveProfile()">Save Profile</button>
-  </div>
-  <footer id="contact">
-    <p>&copy; 2025 Game Arcade Hub. All rights reserved.</p>
-    <p>Contact: <a href="mailto:support@gamearcadehub.com" style="color: #0ff;">support@gamearcadehub.com</a></p>
-    <p>Follow us: 
-      <a href="https://twitter.com" style="color: #0ff;" target="_blank">Twitter</a> | 
-      <a href="https://facebook.com" style="color: #0ff;" target="_blank">Facebook</a>
+
+  <footer class="w-full max-w-6xl mx-auto px-4 py-6 text-center text-gray-300 text-sm">
+    <p>&copy; 2025 गेम आर्केड हब. सर्वाधिकार सुरक्षित | Game Arcade Hub. All rights reserved.</p>
+    <p>संपर्क करें | Contact: <a href="mailto:support@gamearcadehub.com" class="text-orange-400 hover:underline">support@gamearcadehub.com</a></p>
+    <p>हमें फॉलो करें | Follow us: 
+      <a href="https://twitter.com" class="text-orange-400 hover:underline" target="_blank">ट्विटर | Twitter</a> | 
+      <a href="https://facebook.com" class="text-orange-400 hover:underline" target="_blank">फेसबुक | Facebook</a> | 
+      <a href="https://instagram.com" class="text-orange-400 hover:underline" target="_blank">इंस्टाग्राम | Instagram</a>
     </p>
   </footer>
 
   <script>
-    // Load high scores and profile from localStorage
     function loadScores() {
       const games = ['space-dodge', 'alien-shooter', 'cosmic-race', 'star-puzzle'];
       games.forEach(game => {
@@ -298,28 +194,28 @@
       document.getElementById('email').value = localStorage.getItem('email') || 'guest@example.com';
     }
 
-    // Start game
     function startGame(gameId) {
-      if (gameId === 'space-dodge') {
-        window.location.href = 'space-dodge.html';
-      } else {
-        alert(`Coming Soon! ${gameId.replace('-', ' ')} is under development. Try Space Dodge for now!`);
-      }
+      const gameFiles = {
+        'space-dodge': 'space-dodge.html',
+        'alien-shooter': 'alien-shooter.html',
+        'cosmic-race': 'cosmic-race.html',
+        'star-puzzle': 'star-puzzle.html'
+      };
+      window.location.href = gameFiles[gameId];
       let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
       gamesPlayed++;
       localStorage.setItem('gamesPlayed', gamesPlayed);
       document.getElementById('gamesPlayed').textContent = gamesPlayed;
     }
 
-    // Show/hide panels
     function showPanel(panelId) {
-      document.getElementById(panelId).style.display = 'block';
+      document.getElementById(panelId).style.display = 'flex';
     }
+
     function hidePanel(panelId) {
       document.getElementById(panelId).style.display = 'none';
     }
 
-    // Settings handling
     const soundVolume = document.getElementById('soundVolume');
     const difficulty = document.getElementById('difficulty');
     const difficultyLabel = document.getElementById('difficultyLabel');
@@ -328,45 +224,58 @@
     soundVolume.addEventListener('input', () => {
       localStorage.setItem('soundVolume', soundVolume.value);
     });
+
     difficulty.addEventListener('input', () => {
-      const levels = ['Easy', 'Medium', 'Hard'];
+      const levels = [
+        'आसान | Easy',
+        'मध्यम | Medium',
+        'कठिन | Hard'
+      ];
       difficultyLabel.textContent = levels[difficulty.value - 1];
       localStorage.setItem('difficulty', difficulty.value);
     });
+
     theme.addEventListener('change', () => {
       if (theme.checked) {
-        document.body.style.background = 'linear-gradient(to bottom, #0a0a2a, #1a1a4a)';
-      } else {
-        document.body.style.background = 'linear-gradient(to bottom, #e0e0e0, #f5f5f5)';
+        document.body.classList.remove('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
+        document.body.classList.add('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
         document.querySelectorAll('.game-card').forEach(card => {
-          card.style.background = 'rgba(255, 255, 255, 0.8)';
+          card.classList.remove('bg-gray-200', 'bg-opacity-80');
+          card.classList.add('bg-gray-800', 'bg-opacity-80');
+        });
+      } else {
+        document.body.classList.remove('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
+        document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
+        document.querySelectorAll('.game-card').forEach(card => {
+          card.classList.remove('bg-gray-800', 'bg-opacity-80');
+          card.classList.add('bg-gray-200', 'bg-opacity-80');
         });
       }
       localStorage.setItem('theme', theme.checked ? 'dark' : 'light');
     });
 
-    // Profile handling
     function saveProfile() {
       const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
       localStorage.setItem('username', username);
       localStorage.setItem('email', email);
-      alert('Profile saved successfully!');
+      alert('प्रोफाइल सहेजी गई! | Profile saved successfully!');
     }
 
-    // Initialize
     window.onload = () => {
       loadScores();
       soundVolume.value = localStorage.getItem('soundVolume') || '0.3';
       difficulty.value = localStorage.getItem('difficulty') || '2';
-      const levels = ['Easy', 'Medium', 'Hard'];
+      const levels = ['आसान | Easy', 'मध्यम | Medium', 'कठिन | Hard'];
       difficultyLabel.textContent = levels[difficulty.value - 1];
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         theme.checked = false;
-        document.body.style.background = 'linear-gradient(to bottom, #e0e0e0, #f5f5f5)';
+        document.body.classList.remove('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
+        document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
         document.querySelectorAll('.game-card').forEach(card => {
-          card.style.background = 'rgba(255, 255, 255, 0.8)';
+          card.classList.remove('bg-gray-800', 'bg-opacity-80');
+          card.classList.add('bg-gray-200', 'bg-opacity-80');
         });
       }
     };
