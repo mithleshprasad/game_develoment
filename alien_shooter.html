@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cosmic Race Game</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to bottom, #0a0a2a, #1a1a4a);
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      touch-action: none;
+    }
+    canvas {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      max-height: 80vh;
+      border: 2px solid #fff;
+      background: #000;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    #ui {
+      position: absolute;
+      top: 2vh;
+      left: 2vw;
+      font-size: clamp(16px, 3vw, 24px);
+      text-shadow: 0 0 10px #0ff;
+    }
+    #gameOver {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: none;
+      background: rgba(0, 0, 0, 0.9);
+      padding: clamp(15px, 3vw, 30px);
+      border-radius: 15px;
+      box-shadow: 0 0 30px #0ff;
+      animation: fadeIn 0.5s ease-in;
+      width: 80%;
+      max-width: 400px;
+    }
+    button {
+      padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 24px);
+      font-size: clamp(14px, 2.5vw, 20px);
+      background: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+    button:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+    #touchControls {
+      position: absolute;
+      bottom: 2vh;
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2vw;
+      box-sizing: border-box;
+      display: none;
+    }
+    .touchBtn {
+      width: clamp(50px, 15vw, 100px);
+      height: clamp(50px, 15vw, 100px);
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      touch-action: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @media (max-width: 600px) {
+      #touchControls { display: flex; }
+    }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div>Distance: <span id="distance">0</span> m</div>
+    <div>Time: <span id="time">0</span> s</div>
+    <div>Speed: <span id="speed">5</span> m/s</div>
+    <div>Level: <span id="level">1</span></div>
+    <div>Boost: <span id="boost">0</span>s</div>
+  </div>
+  <div id="gameOver">
+    <h2>Game Over</h2>
+    <p>Final Distance: <span id="finalDistance"></span> m</p>
+    <p>Time Survived: <span id="finalTime"></span> s</p>
+    <p>Level Reached: <span id="finalLevel"></span></p>
+    <button onclick="restartGame()">Restart</button>
+    <button onclick="window.location.href='game_develoment'">Back to Menu</button>
+  </div>
+  <canvas id="gameCanvas"></canvas>
+  <div id="touchControls">
+    <div id="leftBtn" class="touchBtn"></div>
+    <div id="rightBtn" class="touchBtn"></div>
+    <div id="boostBtn" class="touchBtn"></div>
+  </div>
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="crashSound">
+    <source src="https://cdn.freesound.org/previews/342/342607_5858296-lq.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="powerUpSound">
+    <source src="https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="boostSound">
+    <source src="https://cdn.freesound.org/previews/171/171671_2437358-lq.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const distanceDisplay = document.getElementById('distance');
+    const timeDisplay = document.getElementById('time');
+    const speedDisplay = document.getElementById('speed');
+    const levelDisplay = document.getElementById('level');
+    const boostDisplay = document.getElementById('boost');
+    const gameOverScreen = document.getElementById('gameOver');
+    const finalDistanceDisplay = document.getElementById('finalDistance');
+    const finalTimeDisplay = document.getElementById('finalTime');
+    const finalLevelDisplay = document.getElementById('finalLevel');
+    const bgMusic = document.getElementById('bgMusic');
+    const crashSound = document.getElementById('crashSound');
+    const powerUpSound = document.getElementById('powerUpSound');
+    const boostSound = document.getElementById('boostSound');
+
+    function resizeCanvas() {
+      canvas.width = Math.min(window.innerWidth, 800);
+      canvas.height = Math.min(window.innerHeight * 0.8, 600);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let distance = 0;
+    let time = 0;
+    let baseSpeed = 5;
+    let level = 1;
+    let boostTime = 0;
+    let gameRunning = true;
+    let frameCount = 0;
+    const levelThreshold = 1000; // Distance in meters to level up
+
+    const player = {
+      x: canvas.width / 2 - 25,
+      y: canvas.height - 60,
+      width: 50,
+      height: 50,
+      speed: baseSpeed,
+      dx: 0,
+      pulse: 1,
+      pulseSpeed: 0.02
+    };
+
+    const obstacles = [];
+    const powerUps = [];
+    const particles = [];
+    let trackSpeed = 3;
+    let obstacleSpawnRate = 60;
+
+    const controls = { left: false, right: false, boost: false };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') controls.left = true;
+      if (e.key === 'ArrowRight') controls.right = true;
+      if (e.key === ' ') controls.boost = true;
+    });
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft') controls.left = false;
+      if (e.key === 'ArrowRight') controls.right = false;
+      if (e.key === ' ') controls.boost = false;
+    });
+
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+    const boostBtn = document.getElementById('boostBtn');
+    leftBtn.addEventListener('touchstart', () => controls.left = true);
+    leftBtn.addEventListener('touchend', () => controls.left = false);
+    rightBtn.addEventListener('touchstart', () => controls.right = true);
+    rightBtn.addEventListener('touchend', () => controls.right = false);
+    boostBtn.addEventListener('touchstart', () => controls.boost = true);
+    boostBtn.addEventListener('touchend', () => controls.boost = false);
+
+    function movePlayer() {
+      if (controls.left) player.dx = -player.speed;
+      else if (controls.right) player.dx = player.speed;
+      else player.dx = 0;
+
+      player.x += player.dx;
+      if (player.x < 0) player.x = 0;
+      if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+
+      player.pulse += player.pulseSpeed;
+      if (player.pulse > 1.1 || player.pulse < 0.9) player.pulseSpeed = -player.pulseSpeed;
+
+      let currentSpeed = baseSpeed;
+      if (controls.boost && boostTime > 0) {
+        currentSpeed = baseSpeed * 1.5;
+        boostTime--;
+        boostDisplay.textContent = Math.ceil(boostTime / 60);
+        if (boostTime === 299) boostSound.play().catch(() => {});
+      } else {
+        boostDisplay.textContent = Math.ceil(boostTime / 60);
+      }
+      player.speed = currentSpeed;
+      speedDisplay.textContent = currentSpeed.toFixed(1);
+      distance += currentSpeed / 60; // Distance per frame (60 FPS)
+      distanceDisplay.textContent = Math.floor(distance);
+    }
+
+    function createObstacle() {
+      const size = Math.random() * 20 + 20 + level * 5;
+      const x = Math.random() * (canvas.width - size);
+      obstacles.push({
+        x: x,
+        y: -size,
+        width: size,
+        height: size,
+        speed: trackSpeed + Math.random() * level,
+        rotation: 0,
+        rotSpeed: (Math.random() - 0.5) * 0.05
+      });
+    }
+
+    function createPowerUp() {
+      const x = Math.random() * (canvas.width - 20);
+      const types = ['speed', 'boost'];
+      powerUps.push({
+        x: x,
+        y: -20,
+        width: 20,
+        height: 20,
+        type: types[Math.floor(Math.random() * types.length)],
+        glow: 0,
+        glowSpeed: 0.03
+      });
+    }
+
+    function createParticles(x, y, count, color) {
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          radius: Math.random() * 5 + 2,
+          speedX: (Math.random() - 0.5) * 6,
+          speedY: (Math.random() - 0.5) * 6,
+          life: 60,
+          color: color
+        });
+      }
+    }
+
+    function checkCollision(obj1, obj2) {
+      return (
+        obj1.x < obj2.x + obj2.width &&
+        obj1.x + obj1.width > obj2.x &&
+        obj1.y < obj2.y + obj2.height &&
+        obj1.y + obj1.height > obj2.y
+      );
+    }
+
+    function update() {
+      if (!gameRunning) return;
+
+      frameCount++;
+      movePlayer();
+
+      time += 1 / 60; // Increment time per frame (60 FPS)
+      timeDisplay.textContent = time.toFixed(1);
+
+      if (distance > level * levelThreshold) {
+        level++;
+        levelDisplay.textContent = level;
+        trackSpeed += 0.5;
+        obstacleSpawnRate = Math.max(20, obstacleSpawnRate - 5);
+        baseSpeed = Math.min(10, baseSpeed + 0.5);
+      }
+
+      if (frameCount % obstacleSpawnRate === 0) createObstacle();
+      if (frameCount % (obstacleSpawnRate * 3) === 0) createPowerUp();
+
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const obstacle = obstacles[i];
+        obstacle.y += obstacle.speed;
+        obstacle.rotation += obstacle.rotSpeed;
+        if (obstacle.y > canvas.height) {
+          obstacles.splice(i, 1);
+          continue;
+        }
+        if (checkCollision(player, obstacle)) {
+          createParticles(obstacle.x + obstacle.width / 2, obstacle.y + obstacle.height / 2, 10, '#ff5555');
+          crashSound.play().catch(() => {});
+          obstacles.splice(i, 1);
+          endGame();
+        }
+      }
+
+      for (let i = powerUps.length - 1; i >= 0; i--) {
+        const powerUp = powerUps[i];
+        powerUp.y += 2;
+        powerUp.glow += powerUp.glowSpeed;
+        if (powerUp.glow > 1 || powerUp.glow < 0) powerUp.glowSpeed = -powerUp.glowSpeed;
+        if (powerUp.y > canvas.height) {
+          powerUps.splice(i, 1);
+          continue;
+        }
+        if (checkCollision(player, powerUp)) {
+          if (powerUp.type === 'speed') baseSpeed = Math.min(10, baseSpeed + 1);
+          else if (powerUp.type === 'boost') boostTime = 300; // 5 seconds at 60 FPS
+          createParticles(powerUp.x + powerUp.width / 2, powerUp.y + powerUp.height / 2, 8, powerUp.type === 'speed' ? '#f0f' : '#ff0');
+          powerUpSound.play().catch(() => {});
+          powerUps.splice(i, 1);
+        }
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const particle = particles[i];
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+        particle.life--;
+        if (particle.life <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw track background (moving stars)
+      ctx.fillStyle = '#fff';
+      for (let i = 0; i < 50; i++) {
+        const x = Math.random() * canvas.width;
+        const y = (Math.random() * canvas.height + frameCount * trackSpeed) % canvas.height;
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw player (racing ship)
+      ctx.save();
+      ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
+      ctx.scale(player.pulse, player.pulse);
+      ctx.fillStyle = boostTime > 0 && controls.boost ? '#f0f' : '#00f';
+      ctx.beginPath();
+      ctx.moveTo(0, -player.height / 2);
+      ctx.lineTo(-player.width / 2, player.height / 2);
+      ctx.lineTo(player.width / 2, player.height / 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
+      ctx.beginPath();
+      ctx.moveTo(0, player.height / 2);
+      ctx.lineTo(-player.width / 4, player.height / 2 + 20);
+      ctx.lineTo(player.width / 4, player.height / 2 + 20);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // Draw obstacles (asteroids)
+      obstacles.forEach(obstacle => {
+        ctx.save();
+        ctx.translate(obstacle.x + obstacle.width / 2, obstacle.y + obstacle.height / 2);
+        ctx.rotate(obstacle.rotation);
+        ctx.fillStyle = '#888';
+        ctx.beginPath();
+        ctx.arc(0, 0, obstacle.width / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.beginPath();
+        ctx.arc(-obstacle.width / 4, -obstacle.height / 4, obstacle.width / 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // Draw power-ups
+      powerUps.forEach(powerUp => {
+        ctx.save();
+        ctx.translate(powerUp.x + powerUp.width / 2, powerUp.y + powerUp.height / 2);
+        const opacity = 0.5 + powerUp.glow * 0.5;
+        ctx.fillStyle = powerUp.type === 'speed' ? 'rgba(255, 0, 255, ' + opacity + ')' :
+                        'rgba(255, 255, 0, ' + opacity + ')';
+        ctx.beginPath();
+        ctx.arc(0, 0, powerUp.width / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // Draw particles
+      particles.forEach(particle => {
+        ctx.fillStyle = particle.color;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function endGame() {
+      gameRunning = false;
+      gameOverScreen.style.display = 'block';
+      finalDistanceDisplay.textContent = Math.floor(distance);
+      finalTimeDisplay.textContent = time.toFixed(1);
+      finalLevelDisplay.textContent = level;
+      bgMusic.pause();
+      const highScore = localStorage.getItem('cosmic-race-highScore') || 0;
+      if (distance > highScore) {
+        localStorage.setItem('cosmic-race-highScore', Math.floor(distance));
+      }
+      const totalScore = parseInt(localStorage.getItem('totalScore') || 0) + Math.floor(distance);
+      localStorage.setItem('totalScore', totalScore);
+    }
+
+    function restartGame() {
+      distance = 0;
+      time = 0;
+      level = 1;
+      boostTime = 0;
+      baseSpeed = 5;
+      obstacles.length = 0;
+      powerUps.length = 0;
+      particles.length = 0;
+      player.x = canvas.width / 2 - 25;
+      player.y = canvas.height - 60;
+      player.speed = baseSpeed;
+      frameCount = 0;
+      trackSpeed = 3;
+      obstacleSpawnRate = 60;
+      gameRunning = true;
+      gameOverScreen.style.display = 'none';
+      distanceDisplay.textContent = distance;
+      timeDisplay.textContent = time;
+      speedDisplay.textContent = baseSpeed.toFixed(1);
+      levelDisplay.textContent = level;
+      boostDisplay.textContent = 0;
+      bgMusic.play().catch(() => {});
+    }
+
+    function gameLoop() {
+      if (gameRunning) {
+        update();
+        draw();
+      }
+      requestAnimationFrame(gameLoop);
+    }
+
+    bgMusic.volume = localStorage.getItem('soundVolume') || 0.3;
+    crashSound.volume = localStorage.getItem('soundVolume') || 0.3;
+    powerUpSound.volume = localStorage.getItem('soundVolume') || 0.3;
+    boostSound.volume = localStorage.getItem('soundVolume') || 0.3;
+    bgMusic.play().catch(() => {});
+    gameLoop();
+  </script>
+</body>
+</html>
