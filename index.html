@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Enhanced Space Dodge Game</title>
+  <meta name="description" content="Welcome to Game Arcade Hub - Your ultimate destination for thrilling space-themed games!">
+  <meta name="keywords" content="game arcade, space dodge, alien shooter, cosmic race, star puzzle, online games">
+  <meta name="author" content="Game Arcade Team">
+  <title>Game Arcade Hub</title>
   <style>
     body {
       margin: 0;
@@ -11,49 +14,90 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(to bottom, #0a0a2a, #1a1a4a);
       font-family: 'Arial', sans-serif;
       color: #fff;
-      overflow: hidden;
-      touch-action: none;
+      overflow-x: hidden;
     }
-    canvas {
+    header {
       width: 100%;
-      max-width: 800px;
-      height: auto;
-      max-height: 80vh;
-      border: 2px solid #fff;
-      background: #000;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-    #ui {
-      position: absolute;
-      top: 2vh;
-      left: 2vw;
-      font-size: clamp(16px, 3vw, 24px);
-      text-shadow: 0 0 10px #0ff;
-    }
-    #gameOver {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      max-width: 1200px;
+      padding: clamp(10px, 2vw, 20px);
       text-align: center;
-      display: none;
-      background: rgba(0, 0, 0, 0.9);
-      padding: clamp(15px, 3vw, 30px);
-      border-radius: 15px;
-      box-shadow: 0 0 30px #0ff;
-      animation: fadeIn 0.5s ease-in;
-      width: 80%;
-      max-width: 400px;
+      text-shadow: 0 0 10px #0ff;
+      position: relative;
+    }
+    h1 {
+      font-size: clamp(24px, 5vw, 48px);
+      margin: 0;
+    }
+    nav {
+      margin: clamp(10px, 2vw, 20px) 0;
+      display: flex;
+      justify-content: center;
+      gap: clamp(10px, 2vw, 20px);
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: clamp(14px, 2vw, 18px);
+      padding: clamp(5px, 1vw, 10px);
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      background: #0ff;
+      color: #0a0a2a;
+    }
+    .game-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(15px, 3vw, 30px);
+      width: 100%;
+      max-width: 1200px;
+      padding: clamp(10px, 2vw, 20px);
+      box-sizing: border-box;
+    }
+    .game-card {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #fff;
+      border-radius: 10px;
+      width: clamp(200px, 30vw, 300px);
+      padding: clamp(10px, 2vw, 20px);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      position: relative;
+    }
+    .game-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #0ff;
+    }
+    .game-card h2 {
+      font-size: clamp(18px, 3vw, 24px);
+      margin: 10px 0;
+      color: #0ff;
+    }
+    .game-card p {
+      font-size: clamp(12px, 2vw, 16px);
+      color: #ddd;
+    }
+    .game-card .difficulty {
+      font-size: clamp(10px, 1.5vw, 14px);
+      color: #0f0;
+      margin: 5px 0;
+    }
+    .game-card .high-score {
+      font-size: clamp(10px, 1.5vw, 14px);
+      color: #ff0;
+      margin: 5px 0;
     }
     button {
-      padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 24px);
-      font-size: clamp(14px, 2.5vw, 20px);
+      padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 24px);
+      font-size: clamp(14px, 2vw, 18px);
       background: #4caf50;
       color: #fff;
       border: none;
@@ -65,428 +109,261 @@
       background: #45a049;
       transform: scale(1.05);
     }
-    #touchControls {
-      position: absolute;
-      bottom: 2vh;
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 2vw;
-      box-sizing: border-box;
+    .settings-panel, .leaderboard, .profile-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: clamp(15px, 3vw, 30px);
+      border-radius: 15px;
+      box-shadow: 0 0 30px #0ff;
       display: none;
+      width: 80%;
+      max-width: 500px;
+      z-index: 10;
     }
-    .touchBtn {
-      width: clamp(50px, 15vw, 100px);
-      height: clamp(50px, 15vw, 100px);
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid #fff;
-      border-radius: 50%;
-      touch-action: none;
+    .settings-panel h2, .leaderboard h2, .profile-panel h2 {
+      font-size: clamp(18px, 3vw, 24px);
+      color: #0ff;
+      margin: 0 0 15px 0;
+    }
+    .settings-panel label, .profile-panel label {
+      display: block;
+      font-size: clamp(12px, 2vw, 16px);
+      margin: 10px 0 5px;
+    }
+    .settings-panel input, .profile-panel input {
+      width: 100%;
+      padding: clamp(5px, 1vw, 10px);
+      border-radius: 5px;
+      border: 1px solid #fff;
+      background: #222;
+      color: #fff;
+      font-size: clamp(12px, 2vw, 16px);
+    }
+    .leaderboard ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .leaderboard li {
+      font-size: clamp(12px, 2vw, 16px);
+      padding: 5px 0;
+      border-bottom: 1px solid #444;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #f00;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    footer {
+      width: 100%;
+      max-width: 1200px;
+      padding: clamp(10px, 2vw, 20px);
+      text-align: center;
+      font-size: clamp(12px, 2vw, 16px);
+      color: #ddd;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -60%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .game-card, .settings-panel, .leaderboard, .profile-panel {
+      animation: fadeIn 0.5s ease-in;
     }
     @media (max-width: 600px) {
-      #touchControls { display: flex; }
+      .game-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .game-card {
+        width: 80%;
+        max-width: 400px;
+      }
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="ui">
-    <div>Score: <span id="score">0</span></div>
-    <div>Health: <span id="health">3</span></div>
-    <div>Level: <span id="level">1</span></div>
-    <div>Shield: <span id="shield">0</span>s</div>
+  <header>
+    <h1>Game Arcade Hub</h1>
+    <p>Your Ultimate Destination for Thrilling Space-Themed Games!</p>
+    <nav>
+      <a href="#" onclick="showPanel('settings')">Settings</a>
+      <a href="#" onclick="showPanel('leaderboard')">Leaderboard</a>
+      <a href="#" onclick="showPanel('profile')">Profile</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <div class="game-container">
+    <div class="game-card" onclick="startGame('space-dodge')">
+      <h2>Space Dodge</h2>
+      <p>Navigate your spaceship, dodge asteroids, and collect power-ups to survive and level up!</p>
+      <div class="difficulty">Difficulty: Medium</div>
+      <div class="high-score">High Score: <span id="space-dodge-score">0</span></div>
+      <a href="/space_dodge_game">
+        
+      <button>Play Now</button>
+      </a>
+    </div>
+    <div class="game-card" onclick="startGame('alien-shooter')">
+      <h2>Alien Shooter</h2>
+      <p>Blast waves of alien invaders, upgrade your weapon, and defend the galaxy!</p>
+      <div class="difficulty">Difficulty: Hard</div>
+      <div class="high-score">High Score: <span id="alien-shooter-score">0</span></div>
+      <button>Play Now</button>
+    </div>
+    <div class="game-card" onclick="startGame('cosmic-race')">
+      <h2>Cosmic Race</h2>
+      <p>Race through space, avoid obstacles, and compete for the fastest time!</p>
+      <div class="difficulty">Difficulty: Easy</div>
+      <div class="high-score">High Score: <span id="cosmic-race-score">0</span></div>
+      <button>Play Now</button>
+    </div>
+    <div class="game-card" onclick="startGame('star-puzzle')">
+      <h2>Star Puzzle</h2>
+      <p>Solve cosmic puzzles, align stars, and unlock new challenges!</p>
+      <div class="difficulty">Difficulty: Medium</div>
+      <div class="high-score">High Score: <span id="star-puzzle-score">0</span></div>
+      <button>Play Now</button>
+    </div>
   </div>
-  <div id="gameOver">
-    <h2>Game Over</h2>
-    <p>Final Score: <span id="finalScore"></span></p>
-    <p>Level Reached: <span id="finalLevel"></span></p>
-    <button onclick="restartGame()">Restart</button>
+  <div class="settings-panel" id="settings">
+    <button class="close-btn" onclick="hidePanel('settings')">X</button>
+    <h2>Settings</h2>
+    <label for="soundVolume">Sound Volume:</label>
+    <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3">
+    <label for="difficulty">Default Difficulty:</label>
+    <input type="range" id="difficulty" min="1" max="3" step="1" value="2">
+    <p>Difficulty: <span id="difficultyLabel">Medium</span></p>
+    <label for="theme">Theme:</label>
+    <input type="checkbox" id="theme" checked> Dark Mode
   </div>
-  <canvas id="gameCanvas"></canvas>
-  <div id="touchControls">
-    <div id="leftBtn" class="touchBtn"></div>
-    <div id="rightBtn" class="touchBtn"></div>
-    <div id="upBtn" class="touchBtn"></div>
-    <div id="downBtn" class="touchBtn"></div>
+  <div class="leaderboard" id="leaderboard">
+    <button class="close-btn" onclick="hidePanel('leaderboard')">X</button>
+    <h2>Leaderboard</h2>
+    <ul id="leaderboardList">
+      <li>Space Dodge - Player1: 1200</li>
+      <li>Alien Shooter - Player2: 950</li>
+      <li>Cosmic Race - Player3: 300</li>
+      <li>Star Puzzle - Player4: 500</li>
+    </ul>
   </div>
-  <audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="hitSound">
-    <source src="https://cdn.freesound.org/previews/342/342607_5858296-lq.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="powerUpSound">
-    <source src="https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3" type="audio/mpeg">
-  </audio>
+  <div class="profile-panel" id="profile">
+    <button class="close-btn" onclick="hidePanel('profile')">X</button>
+    <h2>User Profile</h2>
+    <label for="username">Username:</label>
+    <input type="text" id="username" value="Guest">
+    <label for="email">Email:</label>
+    <input type="email" id="email" value="guest@example.com">
+    <p>Games Played: <span id="gamesPlayed">0</span></p>
+    <p>Total Score: <span id="totalScore">0</span></p>
+    <button onclick="saveProfile()">Save Profile</button>
+  </div>
+  <footer id="contact">
+    <p>&copy; 2025 Game Arcade Hub. All rights reserved.</p>
+    <p>Contact: <a href="mailto:support@gamearcadehub.com" style="color: #0ff;">support@gamearcadehub.com</a></p>
+    <p>Follow us: 
+      <a href="https://twitter.com" style="color: #0ff;" target="_blank">Twitter</a> | 
+      <a href="https://facebook.com" style="color: #0ff;" target="_blank">Facebook</a>
+    </p>
+  </footer>
 
   <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const scoreDisplay = document.getElementById('score');
-    const healthDisplay = document.getElementById('health');
-    const levelDisplay = document.getElementById('level');
-    const shieldDisplay = document.getElementById('shield');
-    const gameOverScreen = document.getElementById('gameOver');
-    const finalScoreDisplay = document.getElementById('finalScore');
-    const finalLevelDisplay = document.getElementById('finalLevel');
-    const bgMusic = document.getElementById('bgMusic');
-    const hitSound = document.getElementById('hitSound');
-    const powerUpSound = document.getElementById('powerUpSound');
-
-    // Adjust canvas size
-    function resizeCanvas() {
-      canvas.width = Math.min(window.innerWidth, 800);
-      canvas.height = Math.min(window.innerHeight * 0.8, 600);
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Game state
-    let score = 0;
-    let health = 3;
-    let level = 1;
-    let shieldTime = 0;
-    let gameRunning = true;
-    let frameCount = 0;
-    const levelThreshold = 500;
-
-    // Player properties
-    const player = {
-      x: canvas.width / 2 - 25,
-      y: canvas.height - 60,
-      width: 50,
-      height: 50,
-      speed: 5,
-      dx: 0,
-      dy: 0,
-      pulse: 1,
-      pulseSpeed: 0.02
-    };
-
-    // Game objects
-    const asteroids = [];
-    const powerUps = [];
-    const particles = [];
-    let asteroidSpeed = 3;
-    let powerUpSpeed = 2;
-    let asteroidSpawnRate = 60;
-
-    // Input handling
-    const controls = { left: false, right: false, up: false, down: false };
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') controls.left = true;
-      if (e.key === 'ArrowRight') controls.right = true;
-      if (e.key === 'ArrowUp') controls.up = true;
-      if (e.key === 'ArrowDown') controls.down = true;
-    });
-    document.addEventListener('keyup', (e) => {
-      if (e.key === 'ArrowLeft') controls.left = false;
-      if (e.key === 'ArrowRight') controls.right = false;
-      if (e.key === 'ArrowUp') controls.up = false;
-      if (e.key === 'ArrowDown') controls.down = false;
-    });
-
-    // Touch controls
-    const leftBtn = document.getElementById('leftBtn');
-    const rightBtn = document.getElementById('rightBtn');
-    const upBtn = document.getElementById('upBtn');
-    const downBtn = document.getElementById('downBtn');
-    leftBtn.addEventListener('touchstart', () => controls.left = true);
-    leftBtn.addEventListener('touchend', () => controls.left = false);
-    rightBtn.addEventListener('touchstart', () => controls.right = true);
-    rightBtn.addEventListener('touchend', () => controls.right = false);
-    upBtn.addEventListener('touchstart', () => controls.up = true);
-    upBtn.addEventListener('touchend', () => controls.up = false);
-    downBtn.addEventListener('touchstart', () => controls.down = true);
-    downBtn.addEventListener('touchend', () => controls.down = false);
-
-    // Player movement
-    function movePlayer() {
-      if (controls.left) player.dx = -player.speed;
-      else if (controls.right) player.dx = player.speed;
-      else player.dx = 0;
-      if (controls.up) player.dy = -player.speed;
-      else if (controls.down) player.dy = player.speed;
-      else player.dy = 0;
-
-      player.x += player.dx;
-      player.y += player.dy;
-      if (player.x < 0) player.x = 0;
-      if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
-      if (player.y < 0) player.y = 0;
-      if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
-
-      player.pulse += player.pulseSpeed;
-      if (player.pulse > 1.1 || player.pulse < 0.9) player.pulseSpeed = -player.pulseSpeed;
-    }
-
-    // Asteroid management
-    function createAsteroid() {
-      const size = Math.random() * 20 + 20 + level * 5;
-      const x = Math.random() * (canvas.width - size);
-      asteroids.push({
-        x: x,
-        y: -size,
-        width: size,
-        height: size,
-        speed: asteroidSpeed + Math.random() * level,
-        rotation: 0,
-        rotSpeed: (Math.random() - 0.5) * 0.05
+    // Load high scores and profile from localStorage
+    function loadScores() {
+      const games = ['space-dodge', 'alien-shooter', 'cosmic-race', 'star-puzzle'];
+      games.forEach(game => {
+        const score = localStorage.getItem(`${game}-highScore`) || '0';
+        document.getElementById(`${game}-score`).textContent = score;
       });
-    }
-
-    // Power-up management
-    function createPowerUp() {
-      const x = Math.random() * (canvas.width - 20);
-      const types = ['health', 'score', 'shield', 'speed'];
-      powerUps.push({
-        x: x,
-        y: -20,
-        width: 20,
-        height: 20,
-        type: types[Math.floor(Math.random() * types.length)],
-        glow: 0,
-        glowSpeed: 0.03
-      });
-    }
-
-    // Particle effect
-    function createParticles(x, y, count, color) {
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: x,
-          y: y,
-          radius: Math.random() * 5 + 2,
-          speedX: (Math.random() - 0.5) * 6,
-          speedY: (Math.random() - 0.5) * 6,
-          life: 60,
-          color: color
-        });
-      }
-    }
-
-    // Collision detection
-    function checkCollision(obj1, obj2) {
-      return (
-        obj1.x < obj2.x + obj2.width &&
-        obj1.x + obj1.width > obj2.x &&
-        obj1.y < obj2.y + obj2.height &&
-        obj1.y + obj1.height > obj2.y
-      );
-    }
-
-    // Update game state
-    function update() {
-      if (!gameRunning) return;
-
-      frameCount++;
-      movePlayer();
-
-      // Level progression
-      if (score > level * levelThreshold) {
-        level++;
-        levelDisplay.textContent = level;
-        asteroidSpeed += 0.5;
-        asteroidSpawnRate = Math.max(20, asteroidSpawnRate - 5);
-        player.speed = Math.min(8, player.speed + 0.2);
-      }
-
-      // Shield timer
-      if (shieldTime > 0) {
-        shieldTime--;
-        shieldDisplay.textContent = Math.ceil(shieldTime / 60);
-      } else {
-        shieldDisplay.textContent = 0;
-      }
-
-      // Spawn asteroids and power-ups
-      if (frameCount % asteroidSpawnRate === 0) createAsteroid();
-      if (frameCount % (asteroidSpawnRate * 3) === 0) createPowerUp();
-
-      // Update asteroids
-      for (let i = asteroids.length - 1; i >= 0; i--) {
-        const asteroid = asteroids[i];
-        asteroid.y += asteroid.speed;
-        asteroid.rotation += asteroid.rotSpeed;
-        if (asteroid.y > canvas.height) {
-          asteroids.splice(i, 1);
-          continue;
-        }
-        if (checkCollision(player, asteroid) && shieldTime <= 0) {
-          health--;
-          healthDisplay.textContent = health;
-          createParticles(asteroid.x + asteroid.width / 2, asteroid.y + asteroid.height / 2, 10, '#ff5555');
-          hitSound.play().catch(() => {});
-          asteroids.splice(i, 1);
-          if (health <= 0) endGame();
-        } else if (checkCollision(player, asteroid) && shieldTime > 0) {
-          createParticles(asteroid.x + asteroid.width / 2, asteroid.y + asteroid.height / 2, 10, '#00f');
-          asteroids.splice(i, 1);
-        }
-      }
-
-      // Update power-ups
-      for (let i = powerUps.length - 1; i >= 0; i--) {
-        const powerUp = powerUps[i];
-        powerUp.y += powerUpSpeed;
-        powerUp.glow += powerUp.glowSpeed;
-        if (powerUp.glow > 1 || powerUp.glow < 0) powerUp.glowSpeed = -powerUp.glowSpeed;
-        if (powerUp.y > canvas.height) {
-          powerUps.splice(i, 1);
-          continue;
-        }
-        if (checkCollision(player, powerUp)) {
-          if (powerUp.type === 'health') health++;
-          else if (powerUp.type === 'score') score += 50 + level * 10;
-          else if (powerUp.type === 'shield') shieldTime = 300; // 5 seconds at 60fps
-          else if (powerUp.type === 'speed') player.speed = Math.min(8, player.speed + 1);
-          healthDisplay.textContent = health;
-          scoreDisplay.textContent = Math.floor(score);
-          createParticles(powerUp.x + powerUp.width / 2, powerUp.y + powerUp.height / 2, 8, powerUp.type === 'health' ? '#0f0' : powerUp.type === 'shield' ? '#00f' : '#ff0');
-          powerUpSound.play().catch(() => {});
-          powerUps.splice(i, 1);
-        }
-      }
-
-      // Update particles
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const particle = particles[i];
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-        particle.life--;
-        if (particle.life <= 0) particles.splice(i, 1);
-      }
-
-      // Increment score
-      score += 1 + level * 0.5;
-      scoreDisplay.textContent = Math.floor(score);
-    }
-
-    // Draw game elements
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw player
-      ctx.save();
-      ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
-      ctx.scale(player.pulse, player.pulse);
-      ctx.fillStyle = shieldTime > 0 ? '#00f' : '#00f';
-      ctx.beginPath();
-      ctx.moveTo(0, -player.height / 2);
-      ctx.lineTo(-player.width / 2, player.height / 2);
-      ctx.lineTo(player.width / 2, player.height / 2);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
-      ctx.beginPath();
-      ctx.moveTo(0, player.height / 2);
-      ctx.lineTo(-player.width / 4, player.height / 2 + 20);
-      ctx.lineTo(player.width / 4, player.height / 2 + 20);
-      ctx.closePath();
-      ctx.fill();
-      if (shieldTime > 0) {
-        ctx.strokeStyle = 'rgba(0, 255, 255, 0.7)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(0, 0, player.width / 1.5, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // Draw asteroids
-      asteroids.forEach(asteroid => {
-        ctx.save();
-        ctx.translate(asteroid.x + asteroid.width / 2, asteroid.y + asteroid.height / 2);
-        ctx.rotate(asteroid.rotation);
-        ctx.fillStyle = '#888';
-        ctx.beginPath();
-        ctx.arc(0, 0, asteroid.width / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.beginPath();
-        ctx.arc(-asteroid.width / 4, -asteroid.height / 4, asteroid.width / 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      // Draw power-ups
-      powerUps.forEach(powerUp => {
-        ctx.save();
-        ctx.translate(powerUp.x + powerUp.width / 2, powerUp.y + powerUp.height / 2);
-        ctx.fillStyle = powerUp.type === 'health' ? `rgba(0, 255, 0, ${0.5 + powerUp.glow * 0.5})` :
-                        powerUp.type === 'shield' ? `rgba(0, 255, 255, ${0.5 + powerUp.glow * 0.5})` :
-                        powerUp.type === 'speed' ? `rgba(255, 0, 255, ${0.5 + powerUp.glow * 0.5})` :
-                        `rgba(255, 255, 0, ${0.5 + powerUp.glow * 0.5})`;
-        ctx.beginPath();
-        ctx.arc(0, 0, powerUp.width / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      // Draw particles
-      particles.forEach(particle => {
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    // Game over
-    function endGame() {
-      gameRunning = false;
-      gameOverScreen.style.display = 'block';
-      finalScoreDisplay.textContent = Math.floor(score);
-      finalLevelDisplay.textContent = level;
-      bgMusic.pause();
-    }
-
-    // Restart game
-    function restartGame() {
-      score = 0;
-      health = 3;
-      level = 1;
-      shieldTime = 0;
-      asteroids.length = 0;
-      powerUps.length = 0;
-      particles.length = 0;
-      player.x = canvas.width / 2 - 25;
-      player.y = canvas.height - 60;
-      player.speed = 5;
-      frameCount = 0;
-      asteroidSpeed = 3;
-      asteroidSpawnRate = 60;
-      gameRunning = true;
-      gameOverScreen.style.display = 'none';
-      scoreDisplay.textContent = score;
-      healthDisplay.textContent = health;
-      levelDisplay.textContent = level;
-      shieldDisplay.textContent = 0;
-      bgMusic.play().catch(() => {});
-    }
-
-    // Game loop
-    function gameLoop() {
-      if (gameRunning) {
-        update();
-        draw();
-      }
-      requestAnimationFrame(gameLoop);
+      const gamesPlayed = localStorage.getItem('gamesPlayed') || '0';
+      const totalScore = localStorage.getItem('totalScore') || '0';
+      document.getElementById('gamesPlayed').textContent = gamesPlayed;
+      document.getElementById('totalScore').textContent = totalScore;
+      document.getElementById('username').value = localStorage.getItem('username') || 'Guest';
+      document.getElementById('email').value = localStorage.getItem('email') || 'guest@example.com';
     }
 
     // Start game
-    bgMusic.volume = 0.3;
-    bgMusic.play().catch(() => {});
-    gameLoop();
+    function startGame(gameId) {
+      if (gameId === 'space-dodge') {
+        window.location.href = 'space-dodge.html';
+      } else {
+        alert(`Coming Soon! ${gameId.replace('-', ' ')} is under development. Try Space Dodge for now!`);
+      }
+      let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+      gamesPlayed++;
+      localStorage.setItem('gamesPlayed', gamesPlayed);
+      document.getElementById('gamesPlayed').textContent = gamesPlayed;
+    }
+
+    // Show/hide panels
+    function showPanel(panelId) {
+      document.getElementById(panelId).style.display = 'block';
+    }
+    function hidePanel(panelId) {
+      document.getElementById(panelId).style.display = 'none';
+    }
+
+    // Settings handling
+    const soundVolume = document.getElementById('soundVolume');
+    const difficulty = document.getElementById('difficulty');
+    const difficultyLabel = document.getElementById('difficultyLabel');
+    const theme = document.getElementById('theme');
+
+    soundVolume.addEventListener('input', () => {
+      localStorage.setItem('soundVolume', soundVolume.value);
+    });
+    difficulty.addEventListener('input', () => {
+      const levels = ['Easy', 'Medium', 'Hard'];
+      difficultyLabel.textContent = levels[difficulty.value - 1];
+      localStorage.setItem('difficulty', difficulty.value);
+    });
+    theme.addEventListener('change', () => {
+      if (theme.checked) {
+        document.body.style.background = 'linear-gradient(to bottom, #0a0a2a, #1a1a4a)';
+      } else {
+        document.body.style.background = 'linear-gradient(to bottom, #e0e0e0, #f5f5f5)';
+        document.querySelectorAll('.game-card').forEach(card => {
+          card.style.background = 'rgba(255, 255, 255, 0.8)';
+        });
+      }
+      localStorage.setItem('theme', theme.checked ? 'dark' : 'light');
+    });
+
+    // Profile handling
+    function saveProfile() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
+      alert('Profile saved successfully!');
+    }
+
+    // Initialize
+    window.onload = () => {
+      loadScores();
+      soundVolume.value = localStorage.getItem('soundVolume') || '0.3';
+      difficulty.value = localStorage.getItem('difficulty') || '2';
+      const levels = ['Easy', 'Medium', 'Hard'];
+      difficultyLabel.textContent = levels[difficulty.value - 1];
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        theme.checked = false;
+        document.body.style.background = 'linear-gradient(to bottom, #e0e0e0, #f5f5f5)';
+        document.querySelectorAll('.game-card').forEach(card => {
+          card.style.background = 'rgba(255, 255, 255, 0.8)';
+        });
+      }
+    };
   </script>
 </body>
 </html>
