@@ -3,122 +3,238 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Game Arcade Hub - भारत के लिए रोमांचक अंतरिक्ष थीम वाले गेम्स का केंद्र!">
-  <meta name="keywords" content="game arcade, space dodge, alien shooter, cosmic race, star puzzle, online games, भारत गेमिंग">
-  <meta name="author" content="Game Arcade Team">
-  <title>Game Arcade Hub</title>
+  <meta name="description" content="Cosmic Casino Hub - A Premium Destination for Thrilling Space-Themed Games!">
+  <meta name="keywords" content="cosmic casino, space dodge, alien shooter, cosmic race, dragon tiger, online games, premium gaming">
+  <meta name="author" content="Cosmic Casino Team">
+  <title>Cosmic Casino Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary-gold: #d4af37; /* Gold accent */
+      --secondary-red: #c11f1f; /* Red accent */
+      --dark-bg: #1a1a1a; /* Dark background */
+      --darker-bg: #0f0f0f; /* Even darker for depth */
+      --light-text: #f8f8f8; /* Light text */
+      --table-green: #0a5c36; /* Casino table green */
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+      50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     .game-card {
-      animation: fadeIn 0.5s ease-out;
+      animation: fadeIn 0.7s ease-out;
       background-size: cover;
       background-position: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid var(--primary-gold);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background-color: rgba(26, 26, 26, 0.9);
     }
     .game-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 183, 77, 0.8);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+    }
+    .game-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+    .game-card:hover::before {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
     }
     .modal {
       animation: fadeIn 0.3s ease-out;
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      animation: fadeIn 0.5s ease-out;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      background: var(--darker-bg);
     }
     .bg-pattern {
       background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"%3E%3Ccircle cx="10" cy="10" r="1" fill="white"/%3E%3Ccircle cx="50" cy="20" r="1.5" fill="white"/%3E%3Ccircle cx="80" cy="30" r="1" fill="white"/%3E%3Ccircle cx="30" cy="60" r="1.2" fill="white"/%3E%3Ccircle cx="70" cy="80" r="1" fill="white"/%3E%3C/svg%3E');
-      background-size: 80px;
+      background-size: 50px;
       background-repeat: repeat;
+      opacity: 0.15;
+    }
+    .glow-effect {
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    .spin-effect {
+      animation: spin 20s linear infinite;
     }
     @font-face {
       font-family: 'Noto Sans';
       src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
     }
+    .custom-range::-webkit-slider-thumb {
+      background: var(--primary-gold);
+      border: 2px solid var(--light-text);
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .custom-range::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+    }
+    .custom-range::-webkit-slider-runnable-track {
+      background: #2d2d2d;
+      height: 5px;
+      border-radius: 3px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-primary {
+      background: var(--primary-gold);
+      color: var(--darker-bg);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+    .btn-primary:hover {
+      background: #e6c34d;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+    }
+    .btn-secondary {
+      background: var(--secondary-red);
+      color: var(--light-text);
+      box-shadow: 0 5px 15px rgba(193, 31, 31, 0.4);
+    }
+    .btn-secondary:hover {
+      background: #d93636;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(193, 31, 31, 0.6);
+    }
+    .btn-success {
+      background: #28a745;
+      color: var(--light-text);
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    }
+    .btn-success:hover {
+      background: #2ecc71;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-gold);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 2px solid var(--primary-gold);
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+    }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-blue-900 to-orange-900 text-white bg-pattern font-['Noto_Sans']">
-  <header class="w-full max-w-6xl mx-auto px-4 py-6 text-center">
-    <h1 class="text-3xl md:text-5xl font-bold tracking-wide text-orange-300 drop-shadow-lg animate-fadeIn">
-      गेम आर्केड हब
-    </h1>
-    <p class="mt-2 text-base md:text-lg text-gray-200">
-      रोमांचक अंतरिक्ष गेम्स का मजा लें! | Thrilling Space Games for Everyone!
-    </p>
-    <nav class="mt-4 flex justify-center gap-3 flex-wrap">
-      <a href="#" onclick="showPanel('settings')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
-        सेटिंग्स | Settings
-      </a>
-      <a href="#" onclick="showPanel('leaderboard')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
-        लीडरबोर्ड | Leaderboard
-      </a>
-      <a href="#" onclick="showPanel('profile')" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
-        प्रोफाइल | Profile
-      </a>
-      <a href="#contact" class="px-4 py-2 text-sm md:text-base font-medium text-white bg-blue-600 rounded-full hover:bg-orange-500 transition-all duration-300">
-        संपर्क | Contact
-      </a>
-    </nav>
+<body class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white bg-pattern font-['Noto_Sans']">
+  <div class="absolute inset-0 bg-pattern pointer-events-none"></div>
+  
+  <header class="w-full max-w-7xl mx-auto px-6 py-6 relative z-10">
+    <div class="flex justify-between items-center">
+      <div class="logo animate-fadeIn">
+        <i class="fas fa-crown text-4xl spin-effect"></i>
+        <span>Cosmic Casino Hub</span>
+      </div>
+      <nav class="flex gap-4 flex-wrap">
+        <a href="#" onclick="showPanel('settings')" class="btn btn-primary">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="#" onclick="showPanel('leaderboard')" class="btn btn-primary">
+          <i class="fas fa-trophy"></i> Leaderboard
+        </a>
+        <a href="#" onclick="showPanel('profile')" class="btn btn-primary">
+          <i class="fas fa-user"></i> Profile
+        </a>
+        <a href="#contact" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Contact
+        </a>
+      </nav>
+    </div>
+    <div class="mt-4 text-center">
+      <p class="text-lg md:text-xl text-gray-300 animate-fadeIn delay-200">
+        A Premium Destination for Thrilling Space-Themed Games!
+      </p>
+    </div>
   </header>
 
-  <main class="w-full max-w-6xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1504198458649-3128b6a7b01a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('space-dodge')">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10">
-          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">स्पेस डॉज | Space Dodge</h2>
-          <p class="text-xs md:text-sm text-gray-300 mb-3">अंतरिक्ष यान चलाएं, उल्कापिंडों से बचें! | Dodge asteroids with your spaceship!</p>
-          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: मध्यम | Difficulty: Medium</div>
-          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="space-dodge-score">0</span> | High Score</div>
+  <main class="w-full max-w-7xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1504198458649-3128b6a7b01a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('space-dodge')">
+        <div class="relative z-10 p-6 text-center">
+          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Space Dodge</h2>
+          <p class="text-sm text-gray-200 mb-4">Dodge asteroids with your spaceship!</p>
+          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
+          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="space-dodge-score">0</span></div>
           <a href="space_dodge_game">
-            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
-              अभी खेलें | Play Now
+            <button class="btn btn-success">
+              <i class="fas fa-play"></i> Play Now
             </button>
           </a>
         </div>
       </div>
-      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('alien-shooter')">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10">
-          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">एलियन शूटर | Alien Shooter</h2>
-          <p class="text-xs md:text-sm text-gray-300 mb-3">एलियंस को हराएं, हथियार अपग्रेड करें! | Blast aliens, upgrade weapons!</p>
-          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: कठिन | Difficulty: Hard</div>
-          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="alien-shooter-score">0</span> | High Score</div>
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('alien-shooter')">
+        <div class="relative z-10 p-6 text-center">
+          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Alien Shooter</h2>
+          <p class="text-sm text-gray-200 mb-4">Blast aliens, upgrade weapons!</p>
+          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Hard</div>
+          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="alien-shooter-score">0</span></div>
           <a href="alien_shooter">
-            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
-              अभी खेलें | Play Now
+            <button class="btn btn-success">
+              <i class="fas fa-play"></i> Play Now
             </button>
           </a>
         </div>
       </div>
-      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('cosmic-race')">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10">
-          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">कॉस्मिक रेस | Cosmic Race</h2>
-          <p class="text-xs md:text-sm text-gray-300 mb-3">अंतरिक्ष में दौड़ें, बाधाओं से बचें! | Race through space, avoid obstacles!</p>
-          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: आसान | Difficulty: Easy</div>
-          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="cosmic-race-score">0</span> | High Score</div>
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('cosmic-race')">
+        <div class="relative z-10 p-6 text-center">
+          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Cosmic Race</h2>
+          <p class="text-sm text-gray-200 mb-4">Race through space, avoid obstacles!</p>
+          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Easy</div>
+          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="cosmic-race-score">0</span></div>
           <a href="cosmic_race">
-            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
-              अभी खेलें | Play Now
+            <button class="btn btn-success">
+              <i class="fas fa-play"></i> Play Now
             </button>
           </a>
         </div>
       </div>
-      <div class="game-card relative bg-gray-800 bg-opacity-80 border-2 border-orange-400 rounded-2xl p-4 text-center overflow-hidden cursor-pointer" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('star-puzzle')">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10">
-          <h2 class="text-xl md:text-2xl font-bold text-orange-300 mb-2">Dragon Tiger</h2>
-<!--           <p class="text-xs md:text-sm text-gray-300 mb-3">तारों को सही जगह लगाएं! | Solve cosmic star puzzles!</p> -->
-          <div class="text-xs md:text-sm text-green-400 mb-2">कठिनाई: मध्यम | Difficulty: Medium</div>
-          <div class="text-xs md:text-sm text-yellow-400 mb-3">उच्च स्कोर: <span id="star-puzzle-score">0</span> | High Score</div>
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('star-puzzle')">
+        <div class="relative z-10 p-6 text-center">
+          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Dragon Tiger</h2>
+          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
+          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="star-puzzle-score">0</span></div>
           <a href="dragon-tiger">
-            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm md:text-base">
-              अभी खेलें | Play Now
+            <button class="btn btn-success">
+              <i class="fas fa-play"></i> Play Now
             </button>
           </a>
         </div>
@@ -126,56 +242,82 @@
     </div>
   </main>
 
-  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="settings">
-    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('settings')">X</button>
-      <h2 class="text-2xl font-bold text-orange-300 mb-4">सेटिंग्स | Settings</h2>
-      <label class="block text-sm mb-2">ध्वनि स्तर | Sound Volume:</label>
-      <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3" class="w-full mb-4">
-      <label class="block text-sm mb-2">कठिनाई | Difficulty:</label>
-      <input type="range" id="difficulty" min="1" max="3" step="1" value="2" class="w-full mb-2">
-      <p class="text-sm">कठिनाई: <span id="difficultyLabel">मध्यम | Medium</span></p>
-      <label class="block text-sm mt-4">थीम | Theme:</label>
-      <input type="checkbox" id="theme" checked class="mr-2"> डार्क मोड | Dark Mode
+  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="settings">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('settings')">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
+        <i class="fas fa-cog mr-3 text-[var(--primary-gold)]"></i> Settings
+      </h2>
+      <label class="block text-sm mb-2 text-gray-200">Sound Volume:</label>
+      <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3" class="w-full mb-6 custom-range">
+      <label class="block text-sm mb-2 text-gray-200">Difficulty:</label>
+      <input type="range" id="difficulty" min="1" max="3" step="1" value="2" class="w-full mb-2 custom-range">
+      <p class="text-sm text-gray-200 mb-6">Difficulty: <span id="difficultyLabel">Medium</span></p>
+      <label class="block text-sm mb-2 text-gray-200 flex items-center">
+        <input type="checkbox" id="theme" checked class="mr-2 w-5 h-5 text-[var(--primary-gold)] bg-gray-700 border-gray-600 rounded focus:ring-[var(--primary-gold)]">
+        Dark Mode
+      </label>
     </div>
   </div>
 
-  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="leaderboard">
-    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('leaderboard')">X</button>
-      <h2 class="text-2xl font-bold text-orange-300 mb-4">लीडरबोर्ड | Leaderboard</h2>
-      <ul class="list-none p-0">
-        <li class="text-sm py-2 border-b border-gray-600">स्पेस डॉज: खिलाड़ी1 - 1200 | Space Dodge: Player1 - 1200</li>
-        <li class="text-sm py-2 border-b border-gray-600">एलियन शूटर: खिलाड़ी2 - 950 | Alien Shooter: Player2 - 950</li>
-        <li class="text-sm py-2 border-b border-gray-600">कॉस्मिक रेस: खिलाड़ी3 - 300 | Cosmic Race: Player3 - 300</li>
-        <li class="text-sm py-2">स्टार पजल: खिलाड़ी4 - 500 | Star Puzzle: Player4 - 500</li>
+  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="leaderboard">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('leaderboard')">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
+        <i class="fas fa-trophy mr-3 text-[var(--primary-gold)]"></i> Leaderboard
+      </h2>
+      <ul class="list-none p-0 space-y-3">
+        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
+          <span>Space Dodge: Player1</span>
+          <span class="text-yellow-400">1200</span>
+        </li>
+        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
+          <span>Alien Shooter: Player2</span>
+          <span class="text-yellow-400">950</span>
+        </li>
+        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
+          <span>Cosmic Race: Player3</span>
+          <span class="text-yellow-400">300</span>
+        </li>
+        <li class="text-sm py-2 flex justify-between items-center">
+          <span>Dragon Tiger: Player4</span>
+          <span class="text-yellow-400">500</span>
+        </li>
       </ul>
     </div>
   </div>
 
-  <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="profile">
-    <div class="bg-gray-800 p-6 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full hover:bg-red-700" onclick="hidePanel('profile')">X</button>
-      <h2 class="text-2xl font-bold text-orange-300 mb-4">प्रोफाइल | Profile</h2>
-      <label class="block text-sm mb-2">उपयोगकर्ता नाम | Username:</label>
-      <input type="text" id="username" value="Guest" class="w-full p-2 bg-gray-700 text-white rounded-lg mb-4">
-      <label class="block text-sm mb-2">ईमेल | Email:</label>
-      <input type="email" id="email" value="guest@example.com" class="w-full p-2 bg-gray-700 text-white rounded-lg mb-4">
-      <p class="text-sm mb-2">खेले गए गेम: <span id="gamesPlayed">0</span> | Games Played</p>
-      <p class="text-sm mb-4">कुल स्कोर: <span id="totalScore">0</span> | Total Score</p>
-      <button onclick="saveProfile()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300">
-        प्रोफाइल सहेजें | Save Profile
+  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="profile">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('profile')">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
+        <i class="fas fa-user mr-3 text-[var(--primary-gold)]"></i> Profile
+      </h2>
+      <label class="block text-sm mb-2 text-gray-200">Username:</label>
+      <input type="text" id="username" value="Guest" class="w-full p-3 bg-gray-800 text-white rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--primary-gold)]">
+      <label class="block text-sm mb-2 text-gray-200">Email:</label>
+      <input type="email" id="email" value="guest@example.com" class="w-full p-3 bg-gray-800 text-white rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--primary-gold)]">
+      <p class="text-sm mb-2 text-gray-200">Games Played: <span id="gamesPlayed">0</span></p>
+      <p class="text-sm mb-6 text-gray-200">Total Score: <span id="totalScore">0</span></p>
+      <button onclick="saveProfile()" class="btn btn-success">
+        <i class="fas fa-save"></i> Save Profile
       </button>
     </div>
   </div>
 
-  <footer class="w-full max-w-6xl mx-auto px-4 py-6 text-center text-gray-300 text-sm">
-    <p>&copy; 2025 गेम आर्केड हब. सर्वाधिकार सुरक्षित | Game Arcade Hub. All rights reserved.</p>
-    <p>संपर्क करें | Contact: <a href="mailto:support@gamearcadehub.com" class="text-orange-400 hover:underline">support@gamearcadehub.com</a></p>
-    <p>हमें फॉलो करें | Follow us: 
-      <a href="https://twitter.com" class="text-orange-400 hover:underline" target="_blank">ट्विटर | Twitter</a> | 
-      <a href="https://facebook.com" class="text-orange-400 hover:underline" target="_blank">फेसबुक | Facebook</a> | 
-      <a href="https://instagram.com" class="text-orange-400 hover:underline" target="_blank">इंस्टाग्राम | Instagram</a>
+  <footer class="w-full max-w-7xl mx-auto px-4 py-8 text-center text-gray-300 text-sm border-t border-gray-800 mt-10">
+    <p>© 2025 Cosmic Casino Hub. All rights reserved.</p>
+    <p class="mt-2">Contact: <a href="mailto:support@cosmiccasinohub.com" class="text-[var(--primary-gold)] hover:underline">support@cosmiccasinohub.com</a></p>
+    <p class="mt-2">Follow us: 
+      <a href="https://twitter.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-twitter mr-1"></i> Twitter</a> | 
+      <a href="https://facebook.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-facebook mr-1"></i> Facebook</a> | 
+      <a href="https://instagram.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-instagram mr-1"></i> Instagram</a>
     </p>
   </footer>
 
@@ -226,11 +368,7 @@
     });
 
     difficulty.addEventListener('input', () => {
-      const levels = [
-        'आसान | Easy',
-        'मध्यम | Medium',
-        'कठिन | Hard'
-      ];
+      const levels = ['Easy', 'Medium', 'Hard'];
       difficultyLabel.textContent = levels[difficulty.value - 1];
       localStorage.setItem('difficulty', difficulty.value);
     });
@@ -238,17 +376,25 @@
     theme.addEventListener('change', () => {
       if (theme.checked) {
         document.body.classList.remove('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
-        document.body.classList.add('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
+        document.body.classList.add('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
         document.querySelectorAll('.game-card').forEach(card => {
           card.classList.remove('bg-gray-200', 'bg-opacity-80');
-          card.classList.add('bg-gray-800', 'bg-opacity-80');
+          card.classList.add('bg-gray-900', 'bg-opacity-80');
+        });
+        document.querySelectorAll('.modal-content').forEach(content => {
+          content.classList.remove('bg-gray-200');
+          content.classList.add('bg-[var(--darker-bg)]');
         });
       } else {
-        document.body.classList.remove('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
+        document.body.classList.remove('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
         document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
         document.querySelectorAll('.game-card').forEach(card => {
-          card.classList.remove('bg-gray-800', 'bg-opacity-80');
+          card.classList.remove('bg-gray-900', 'bg-opacity-80');
           card.classList.add('bg-gray-200', 'bg-opacity-80');
+        });
+        document.querySelectorAll('.modal-content').forEach(content => {
+          content.classList.remove('bg-[var(--darker-bg)]');
+          content.classList.add('bg-gray-200');
         });
       }
       localStorage.setItem('theme', theme.checked ? 'dark' : 'light');
@@ -259,23 +405,27 @@
       const email = document.getElementById('email').value;
       localStorage.setItem('username', username);
       localStorage.setItem('email', email);
-      alert('प्रोफाइल सहेजी गई! | Profile saved successfully!');
+      alert('Profile saved successfully!');
     }
 
     window.onload = () => {
       loadScores();
       soundVolume.value = localStorage.getItem('soundVolume') || '0.3';
       difficulty.value = localStorage.getItem('difficulty') || '2';
-      const levels = ['आसान | Easy', 'मध्यम | Medium', 'कठिन | Hard'];
+      const levels = ['Easy', 'Medium', 'Hard'];
       difficultyLabel.textContent = levels[difficulty.value - 1];
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         theme.checked = false;
-        document.body.classList.remove('bg-gradient-to-b', 'from-blue-900', 'to-orange-900');
+        document.body.classList.remove('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
         document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
         document.querySelectorAll('.game-card').forEach(card => {
-          card.classList.remove('bg-gray-800', 'bg-opacity-80');
+          card.classList.remove('bg-gray-900', 'bg-opacity-80');
           card.classList.add('bg-gray-200', 'bg-opacity-80');
+        });
+        document.querySelectorAll('.modal-content').forEach(content => {
+          content.classList.remove('bg-[var(--darker-bg)]');
+          content.classList.add('bg-gray-200');
         });
       }
     };
