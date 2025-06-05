@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Cosmic Casino Hub - A Premium Destination for Thrilling Space-Themed Games!">
-  <meta name="keywords" content="cosmic casino, space dodge, alien shooter, cosmic race, dragon tiger, online games, premium gaming">
+  <meta name="keywords" content="cosmic casino, space dodge, alien shooter, cosmic race, dragon tiger, roulette, online games, premium gaming">
   <meta name="author" content="Cosmic Casino Team">
   <title>Cosmic Casino Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,6 +17,7 @@
       --darker-bg: #0f0f0f; /* Even darker for depth */
       --light-text: #f8f8f8; /* Light text */
       --table-green: #0a5c36; /* Casino table green */
+      --shadow-gold: rgba(212, 175, 55, 0.5);
     }
 
     @keyframes fadeIn {
@@ -24,11 +25,34 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
-      50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); }
+      0%, 100% { box-shadow: 0 0 10px var(--shadow-gold); }
+      50% { box-shadow: 0 0 25px var(--shadow-gold); }
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans', sans-serif;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1580752300992-559f8e0734e0?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--light-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: -1;
     }
     .game-card {
       animation: fadeIn 0.7s ease-out;
@@ -42,34 +66,29 @@
       background-color: rgba(26, 26, 26, 0.9);
     }
     .game-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+      transform: scale(1.03);
+      box-shadow: 0 10px 30px var(--shadow-gold);
     }
     .game-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
       z-index: 1;
       transition: background 0.3s ease;
     }
     .game-card:hover::before {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
     }
     .modal {
       animation: fadeIn 0.3s ease-out;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
     .modal-content {
       animation: fadeIn 0.5s ease-out;
-      border: 2px solid rgba(212, 175, 55, 0.4);
+      border: 2px solid rgba(212, 175, 55, 0.5);
       background: var(--darker-bg);
-    }
-    .bg-pattern {
-      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"%3E%3Ccircle cx="10" cy="10" r="1" fill="white"/%3E%3Ccircle cx="50" cy="20" r="1.5" fill="white"/%3E%3Ccircle cx="80" cy="30" r="1" fill="white"/%3E%3Ccircle cx="30" cy="60" r="1.2" fill="white"/%3E%3Ccircle cx="70" cy="80" r="1" fill="white"/%3E%3C/svg%3E');
-      background-size: 50px;
-      background-repeat: repeat;
-      opacity: 0.15;
+      box-shadow: 0 0 30px var(--shadow-gold);
     }
     .glow-effect {
       animation: pulseGlow 2s infinite ease-in-out;
@@ -112,12 +131,12 @@
     .btn-primary {
       background: var(--primary-gold);
       color: var(--darker-bg);
-      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 5px 15px var(--shadow-gold);
     }
     .btn-primary:hover {
       background: #e6c34d;
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+      box-shadow: 0 8px 20px var(--shadow-gold);
     }
     .btn-secondary {
       background: var(--secondary-red);
@@ -143,28 +162,55 @@
       font-size: 2.5rem;
       font-weight: 700;
       color: var(--primary-gold);
-      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      text-shadow: 0 0 10px var(--shadow-gold);
       display: flex;
       align-items: center;
       gap: 10px;
     }
     header {
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.9);
       border-bottom: 2px solid var(--primary-gold);
-      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+      box-shadow: 0 4px 20px var(--shadow-gold);
+      padding: 20px 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nav-links a {
+      font-size: 1rem;
+      padding: 8px 16px;
+    }
+    .game-card h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      text-shadow: 0 0 5px var(--shadow-gold);
+    }
+    .game-card p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .game-card .text-sm {
+      font-size: 0.85rem;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px 0;
+      border-top: 2px solid var(--primary-gold);
     }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white bg-pattern font-['Noto_Sans']">
-  <div class="absolute inset-0 bg-pattern pointer-events-none"></div>
+<body>
+  <div class="overlay"></div>
   
-  <header class="w-full max-w-7xl mx-auto px-6 py-6 relative z-10">
-    <div class="flex justify-between items-center">
+  <header class="w-full relative z-10">
+    <div class="container flex justify-between items-center">
       <div class="logo animate-fadeIn">
         <i class="fas fa-crown text-4xl spin-effect"></i>
         <span>Cosmic Casino Hub</span>
       </div>
-      <nav class="flex gap-4 flex-wrap">
+      <nav class="nav-links flex gap-3 flex-wrap">
         <a href="#" onclick="showPanel('settings')" class="btn btn-primary">
           <i class="fas fa-cog"></i> Settings
         </a>
@@ -179,21 +225,21 @@
         </a>
       </nav>
     </div>
-    <div class="mt-4 text-center">
+    <div class="container mt-4 text-center">
       <p class="text-lg md:text-xl text-gray-300 animate-fadeIn delay-200">
         A Premium Destination for Thrilling Space-Themed Games!
       </p>
     </div>
   </header>
 
-  <main class="w-full max-w-7xl mx-auto px-4 py-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1504198458649-3128b6a7b01a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('space-dodge')">
+  <main class="container py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1591625009757-452a4e55d3e8?q=80&w=300&auto=format&fit=crop');" onclick="startGame('space-dodge')">
         <div class="relative z-10 p-6 text-center">
-          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Space Dodge</h2>
-          <p class="text-sm text-gray-200 mb-4">Dodge asteroids with your spaceship!</p>
-          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="space-dodge-score">0</span></div>
+          <h2 class="text-[var(--primary-gold)] mb-3">Space Dodge</h2>
+          <p class="text-gray-200 mb-4">Dodge asteroids with your spaceship!</p>
+          <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
+          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="space-dodge-score">0</span></div>
           <a href="space_dodge_game">
             <button class="btn btn-success">
               <i class="fas fa-play"></i> Play Now
@@ -201,12 +247,12 @@
           </a>
         </div>
       </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('alien-shooter')">
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1618517351616-38fb9e67be53?q=80&w=300&auto=format&fit=crop');" onclick="startGame('alien-shooter')">
         <div class="relative z-10 p-6 text-center">
-          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Alien Shooter</h2>
-          <p class="text-sm text-gray-200 mb-4">Blast aliens, upgrade weapons!</p>
-          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Hard</div>
-          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="alien-shooter-score">0</span></div>
+          <h2 class="text-[var(--primary-gold)] mb-3">Alien Shooter</h2>
+          <p class="text-gray-200 mb-4">Blast aliens, upgrade weapons!</p>
+          <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Hard</div>
+          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="alien-shooter-score">0</span></div>
           <a href="alien_shooter">
             <button class="btn btn-success">
               <i class="fas fa-play"></i> Play Now
@@ -214,12 +260,12 @@
           </a>
         </div>
       </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('cosmic-race')">
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=300&auto=format&fit=crop');" onclick="startGame('cosmic-race')">
         <div class="relative z-10 p-6 text-center">
-          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Cosmic Race</h2>
-          <p class="text-sm text-gray-200 mb-4">Race through space, avoid obstacles!</p>
-          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Easy</div>
-          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="cosmic-race-score">0</span></div>
+          <h2 class="text-[var(--primary-gold)] mb-3">Cosmic Race</h2>
+          <p class="text-gray-200 mb-4">Race through space, avoid obstacles!</p>
+          <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Easy</div>
+          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="cosmic-race-score">0</span></div>
           <a href="cosmic_race">
             <button class="btn btn-success">
               <i class="fas fa-play"></i> Play Now
@@ -227,12 +273,25 @@
           </a>
         </div>
       </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');" onclick="startGame('star-puzzle')">
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1601944179066-37a53c35a916?q=80&w=300&auto=format&fit=crop');" onclick="startGame('star-puzzle')">
         <div class="relative z-10 p-6 text-center">
-          <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-3 drop-shadow-md">Dragon Tiger</h2>
-          <div class="text-sm text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-sm text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="star-puzzle-score">0</span></div>
+          <h2 class="text-[var(--primary-gold)] mb-3">Dragon Tiger</h2>
+          <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
+          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="star-puzzle-score">0</span></div>
           <a href="dragon-tiger">
+            <button class="btn btn-success">
+              <i class="fas fa-play"></i> Play Now
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1597776826059-81e3912c9c73?q=80&w=300&auto=format&fit=crop');" onclick="startGame('roulette')">
+        <div class="relative z-10 p-6 text-center">
+          <h2 class="text-[var(--primary-gold)] mb-3">Roulette</h2>
+          <p class="text-gray-200 mb-4">Spin the wheel, place your bets!</p>
+          <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
+          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="roulette-score">0</span></div>
+          <a href="roulette">
             <button class="btn btn-success">
               <i class="fas fa-play"></i> Play Now
             </button>
@@ -243,7 +302,7 @@
   </main>
 
   <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="settings">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
       <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('settings')">
         <i class="fas fa-times"></i>
       </button>
@@ -263,7 +322,7 @@
   </div>
 
   <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="leaderboard">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
       <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('leaderboard')">
         <i class="fas fa-times"></i>
       </button>
@@ -283,16 +342,20 @@
           <span>Cosmic Race: Player3</span>
           <span class="text-yellow-400">300</span>
         </li>
-        <li class="text-sm py-2 flex justify-between items-center">
+        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
           <span>Dragon Tiger: Player4</span>
           <span class="text-yellow-400">500</span>
+        </li>
+        <li class="text-sm py-2 flex justify-between items-center">
+          <span>Roulette: Player5</span>
+          <span class="text-yellow-400">800</span>
         </li>
       </ul>
     </div>
   </div>
 
   <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="profile">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative shadow-2xl">
+    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
       <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('profile')">
         <i class="fas fa-times"></i>
       </button>
@@ -311,22 +374,24 @@
     </div>
   </div>
 
-  <footer class="w-full max-w-7xl mx-auto px-4 py-8 text-center text-gray-300 text-sm border-t border-gray-800 mt-10">
-    <p>© 2025 Cosmic Casino Hub. All rights reserved.</p>
-    <p class="mt-2">Contact: <a href="mailto:support@cosmiccasinohub.com" class="text-[var(--primary-gold)] hover:underline">support@cosmiccasinohub.com</a></p>
-    <p class="mt-2">Follow us: 
-      <a href="https://twitter.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-twitter mr-1"></i> Twitter</a> | 
-      <a href="https://facebook.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-facebook mr-1"></i> Facebook</a> | 
-      <a href="https://instagram.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-instagram mr-1"></i> Instagram</a>
-    </p>
+  <footer class="w-full text-center text-gray-300 text-sm">
+    <div class="container">
+      <p>© 2025 Cosmic Casino Hub. All rights reserved.</p>
+      <p class="mt-2">Contact: <a href="mailto:support@cosmiccasinohub.com" class="text-[var(--primary-gold)] hover:underline">support@cosmiccasinohub.com</a></p>
+      <p class="mt-2">Follow us: 
+        <a href="https://twitter.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-twitter mr-1"></i> Twitter</a> | 
+        <a href="https://facebook.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-facebook mr-1"></i> Facebook</a> | 
+        <a href="https://instagram.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-instagram mr-1"></i> Instagram</a>
+      </p>
+    </div>
   </footer>
 
   <script>
     function loadScores() {
-      const games = ['space-dodge', 'alien-shooter', 'cosmic-race', 'star-puzzle'];
+      const games = ['space-dodge', 'alien-shooter', 'cosmic-race', 'star-puzzle', 'roulette'];
       games.forEach(game => {
         const score = localStorage.getItem(`${game}-highScore`) || '0';
-        document.getElementById(`${game}-score`).textContent = score;
+        document.getElementId(`${game}-score`).textContent = score;
       });
       const gamesPlayed = localStorage.getItem('gamesPlayed') || '0';
       const totalScore = localStorage.getItem('totalScore') || '0';
@@ -341,7 +406,8 @@
         'space-dodge': 'space-dodge.html',
         'alien-shooter': 'alien-shooter.html',
         'cosmic-race': 'cosmic-race.html',
-        'star-puzzle': 'star-puzzle.html'
+        'star-puzzle': 'star-puzzle.html',
+        'roulette': 'roulette.html'
       };
       window.location.href = gameFiles[gameId];
       let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
@@ -375,8 +441,8 @@
 
     theme.addEventListener('change', () => {
       if (theme.checked) {
-        document.body.classList.remove('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
-        document.body.classList.add('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
+        document.body.style.background = "url('https://images.unsplash.com/photo-1580752300992-559f8e0734e0?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed";
+        document.body.style.backgroundSize = "cover";
         document.querySelectorAll('.game-card').forEach(card => {
           card.classList.remove('bg-gray-200', 'bg-opacity-80');
           card.classList.add('bg-gray-900', 'bg-opacity-80');
@@ -386,8 +452,7 @@
           content.classList.add('bg-[var(--darker-bg)]');
         });
       } else {
-        document.body.classList.remove('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
-        document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
+        document.body.style.background = "linear-gradient(to-b, #d3d3d3, #a9a9a9)";
         document.querySelectorAll('.game-card').forEach(card => {
           card.classList.remove('bg-gray-900', 'bg-opacity-80');
           card.classList.add('bg-gray-200', 'bg-opacity-80');
@@ -417,8 +482,7 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         theme.checked = false;
-        document.body.classList.remove('bg-gradient-to-b', 'from-gray-900', 'to-gray-800');
-        document.body.classList.add('bg-gradient-to-b', 'from-gray-200', 'to-gray-400');
+        document.body.style.background = "linear-gradient(to-b, #d3d3d3, #a9a9a9)";
         document.querySelectorAll('.game-card').forEach(card => {
           card.classList.remove('bg-gray-900', 'bg-opacity-80');
           card.classList.add('bg-gray-200', 'bg-opacity-80');
