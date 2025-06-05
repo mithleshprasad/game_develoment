@@ -505,7 +505,6 @@
             z-index: 100;
         }
 
-        /* Animations */
         @keyframes dealCard {
             0% { transform: rotateY(0deg); }
             50% { transform: rotateY(90deg); }
@@ -526,7 +525,6 @@
             animation: pulse 1.5s infinite;
         }
 
-        /* Loading spinner */
         .spinner {
             width: 40px;
             height: 40px;
@@ -540,7 +538,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -676,7 +673,6 @@
         <i class="fas fa-volume-up"></i>
     </div>
     
-    <!-- Audio elements -->
     <audio id="dealSound" src="https://www.soundjay.com/mechanical/sounds/card-flip-01.mp3" preload="auto"></audio>
     <audio id="winSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
     <audio id="loseSound" src="https://www.soundjay.com/mechanical/sounds/error-02.mp3" preload="auto"></audio>
@@ -728,13 +724,18 @@
                 showLoading();
                 const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6');
                 const data = await response.json();
-                gameState.deckId = data.deck_id;
-                console.log('New deck created:', gameState.deckId);
+                if (data.success) {
+                    gameState.deckId = data.deck_id;
+                    console.log('New deck created:', gameState.deckId);
+                } else {
+                    throw new Error('Failed to create deck');
+                }
                 hideLoading();
             } catch (error) {
                 console.error('Error initializing deck:', error);
                 showResult('Error connecting to card server', 'lose');
                 hideLoading();
+                resetGameState();
             }
         }
 
@@ -750,6 +751,7 @@
                 document.getElementById(`bet-${gameState.selectedBet}`).classList.remove('selected');
             }
             
+            // Update bet type
             gameState.selectedBet = betType;
             const betElement = document.getElementById(`bet-${gameState.selectedBet}`);
             betElement.classList.add('selected');
@@ -760,37 +762,52 @@
                 betElement.classList.remove('animate__animated', 'animate__pulse');
             }, 1000);
             
-            // Get bet amount
-            gameState.currentBet = parseInt(elements.betAmountInput.value);
-            if (isNaN(gameState.currentBet) {
-                gameState.currentBet = 100;
+            // Get and validate bet amount
+            let betValue = parseInt(elements.betAmountInput.value);
+            if (isNaN(betValue)) {
+                betValue = 100;
                 elements.betAmountInput.value = 100;
             }
             
-            // Validate bet amount
-            if (gameState.currentBet < 50) {
-                gameState.currentBet = 50;
+            if (betValue < 50) {
+                betValue = 50;
                 elements.betAmountInput.value = 50;
-            } else if (gameState.currentBet > 10000) {
-                gameState.currentBet = 10000;
+            } else if (betValue > 10000) {
+                betValue = 10000;
                 elements.betAmountInput.value = 10000;
             }
             
-            if (gameState.currentBet > gameState.balance) {
-                showResult('Insufficient balance', 'lose');
+            if (betValue > gameState.balance) {
+                showResult('Insufficient balance for this bet', 'lose');
+                playSound(audio.lose);
+                gameState.selectedBet = null;
+                betElement.classList.remove('selected');
+                elements.currentBetAmount.textContent = '0';
+                elements.currentBetType.textContent = '-';
                 return;
             }
+            
+            gameState.currentBet = betValue;
             
             // Update UI
             elements.currentBetAmount.textContent = gameState.currentBet.toLocaleString();
             elements.currentBetType.textContent = gameState.selectedBet.charAt(0).toUpperCase() + gameState.selectedBet.slice(1);
             
             console.log(`Bet placed: $${gameState.currentBet} on ${gameState.selectedBet}`);
+            
+            // Enable deal button if not in progress
+            if (!gameState.gameInProgress) {
+                elements.dealBtn.disabled = false;
+            }
         }
 
         // Deal cards
         async function dealCards() {
-            if (!gameState.selectedBet || gameState.gameInProgress) return;
+            if (!gameState.selectedBet || gameState.gameInProgress || gameState.currentBet === 0) {
+                showResult('Please place a valid bet first', 'lose');
+                playSound(audio.lose);
+                return;
+            }
             
             gameState.gameInProgress = true;
             elements.dealBtn.disabled = true;
@@ -801,7 +818,9 @@
             updateBalance();
             
             try {
-                // Show card backs
+                showLoading();
+                
+                // Show card backs with animation
                 elements.dragonCard.src = 'https://deckofcardsapi.com/static/img/back.png';
                 elements.tigerCard.src = 'https://deckofcardsapi.com/static/img/back.png';
                 elements.dragonCard.classList.add('card-deal');
@@ -810,49 +829,48 @@
                 // Play deal sound
                 playSound(audio.deal);
                 
-                // Draw two cards (one for Dragon, one for Tiger)
+                // Draw two cards
                 const response = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/draw/?count=2`);
                 const data = await response.json();
                 
-                if (data.success) {
+                if (data.success && data.cards.length === 2) {
                     const dragonCardData = data.cards[0];
                     const tigerCardData = data.cards[1];
                     
-                    // After a delay, reveal the cards
+                    // Reveal cards after delay
                     setTimeout(() => {
-                        // Remove deal animation
                         elements.dragonCard.classList.remove('card-deal');
                         elements.tigerCard.classList.remove('card-deal');
-                        
-                        // Show card faces
                         elements.dragonCard.src = dragonCardData.image;
                         elements.tigerCard.src = tigerCardData.image;
                         
-                        // Play deal sound again
                         playSound(audio.deal);
                         
-                        // Determine the winner after another delay
+                        // Determine winner after another delay
                         setTimeout(() => {
                             determineWinner(dragonCardData, tigerCardData);
+                            hideLoading();
                         }, 800);
                     }, 500);
                 } else {
-                    throw new Error('Failed to draw cards');
+                    throw new Error('Failed to draw 2 cards');
                 }
             } catch (error) {
                 console.error('Error dealing cards:', error);
                 showResult('Error dealing cards', 'lose');
-                resetGameState();
-                gameState.balance += gameState.currentBet; // Refund the bet
+                playSound(audio.lose);
+                gameState.balance += gameState.currentBet; // Refund bet
                 updateBalance();
+                resetGameState();
+                hideLoading();
             }
         }
 
         // Determine the winner
         function determineWinner(dragonCard, tigerCard) {
-            // Get card values (A=1, J=11, Q=12, K=13)
+            // Card values: Ace is lowest (1), King is highest (13)
             const cardValues = {
-                'ACE': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, 
+                'ACE': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
                 '8': 8, '9': 9, '10': 10, 'JACK': 11, 'QUEEN': 12, 'KING': 13
             };
             
@@ -864,6 +882,7 @@
             let result = '';
             let outcomeClass = '';
             
+            // Determine winner
             if (dragonValue > tigerValue) {
                 winner = 'Dragon';
             } else if (tigerValue > dragonValue) {
@@ -872,15 +891,13 @@
                 winner = 'Tie';
             }
             
-            // Calculate winnings
+            // Calculate winnings and determine outcome
             if (winner === 'Tie') {
                 if (gameState.selectedBet === 'tie') {
                     winnings = gameState.currentBet * 9; // 8:1 payout + original bet
                     result = `TIE! You win ${formatCurrency(winnings)}!`;
                     outcomeClass = 'win';
                     playSound(audio.win);
-                    
-                    // Add celebration effect
                     elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
                 } else {
                     result = `It's a TIE! You lose ${formatCurrency(gameState.currentBet)}`;
@@ -893,8 +910,6 @@
                     result = `${winner} WINS! You win ${formatCurrency(winnings)}!`;
                     outcomeClass = 'win';
                     playSound(audio.win);
-                    
-                    // Add celebration effect
                     elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
                 } else {
                     result = `${winner} WINS! You lose ${formatCurrency(gameState.currentBet)}`;
@@ -910,11 +925,16 @@
             // Show result
             showResult(result, outcomeClass);
             
-            // Add to game history
+            // Add to history
             addToHistory(winner, outcomeClass);
             
             // Enable reset button
             elements.resetBtn.disabled = false;
+            
+            // Remove animation after it completes
+            setTimeout(() => {
+                elements.resultDisplay.classList.remove('animate__animated', 'animate__tada');
+            }, 1000);
         }
 
         // Reset the game
@@ -939,22 +959,26 @@
             elements.currentBetType.textContent = '-';
             gameState.gameInProgress = false;
             
-            // Reinitialize the deck if less than 20 cards remaining
+            // Reset chip selection
+            elements.chips.forEach(chip => chip.classList.remove('active'));
+            
+            // Check deck
             checkDeck();
         }
 
         // Check if we need a new deck
         async function checkDeck() {
             try {
-                const response = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/shuffle/`);
+                const response = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/`);
                 const data = await response.json();
                 
-                if (data.remaining < 20) {
+                if (data.success && data.remaining < 20) {
                     console.log('Low cards remaining, getting new deck...');
-                    initGame();
+                    await initGame();
                 }
             } catch (error) {
                 console.error('Error checking deck:', error);
+                await initGame(); // Try to get a new deck on error
             }
         }
 
@@ -1036,13 +1060,17 @@
         // Hide loading state
         function hideLoading() {
             elements.dealBtn.innerHTML = '<i class="fas fa-play"></i> Deal Cards';
-            elements.dealBtn.disabled = false;
+            if (!gameState.gameInProgress && gameState.selectedBet && gameState.currentBet > 0) {
+                elements.dealBtn.disabled = false;
+            }
         }
 
         // Reset game state (without UI reset)
         function resetGameState() {
             gameState.gameInProgress = false;
-            elements.dealBtn.disabled = false;
+            if (gameState.selectedBet && gameState.currentBet > 0) {
+                elements.dealBtn.disabled = false;
+            }
             elements.resetBtn.disabled = true;
         }
 
@@ -1072,20 +1100,11 @@ Good luck!`);
         // Chip buttons
         elements.chips.forEach(chip => {
             chip.addEventListener('click', function() {
-                // Play chip sound
                 playSound(audio.chip);
-                
-                // Remove active class from all chips
                 elements.chips.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked chip
                 this.classList.add('active');
-                
-                // Set bet amount
                 const amount = parseInt(this.dataset.amount);
                 elements.betAmountInput.value = amount;
-                
-                // If a bet type is already selected, update the bet
                 if (gameState.selectedBet) {
                     placeBet(gameState.selectedBet);
                 }
@@ -1093,7 +1112,7 @@ Good luck!`);
         });
         
         // Bet amount input validation
-        elements.betAmountInput.addEventListener('change', function() {
+        elements.betAmountInput.addEventListener('input', function() {
             let value = parseInt(this.value);
             
             if (isNaN(value)) {
@@ -1106,14 +1125,16 @@ Good luck!`);
             
             this.value = value;
             
-            // If a bet type is already selected, update the bet
             if (gameState.selectedBet) {
                 placeBet(gameState.selectedBet);
             }
         });
         
         // Initialize the game when page loads
-        window.addEventListener('load', initGame);
+        window.addEventListener('load', () => {
+            updateBalance();
+            initGame();
+        });
     </script>
 </body>
 </html>
