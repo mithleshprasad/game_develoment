@@ -2,510 +2,971 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Cosmic Casino Hub - A Premium Destination for Thrilling Space-Themed Games!">
-  <meta name="keywords" content="cosmic casino, space dodge, alien shooter, cosmic race, dragon tiger, roulette, online games, premium gaming">
-  <meta name="author" content="Cosmic Casino Team">
-  <title>Casino Game | Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Casino | Premium Gaming Experience</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+    
     :root {
-      --primary-gold: #d4af37; /* Gold accent */
-      --secondary-red: #c11f1f; /* Red accent */
-      --dark-bg: #1a1a1a; /* Dark background */
-      --darker-bg: #0f0f0f; /* Even darker for depth */
-      --light-text: #f8f8f8; /* Light text */
-      --table-green: #0a5c36; /* Casino table green */
-      --shadow-gold: rgba(212, 175, 55, 0.5);
+      --primary: #d4af37;
+      --primary-dark: #b8951c;
+      --secondary: #1e3a8a;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --success: #10b981;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --glow: rgba(212, 175, 55, 0.7);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 10px var(--shadow-gold); }
-      50% { box-shadow: 0 0 25px var(--shadow-gold); }
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Noto Sans', sans-serif;
-    }
+    
     body {
-      background: url('https://images.unsplash.com/photo-1580752300992-559f8e0734e0?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
-      color: var(--light-text);
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--darker);
+      color: var(--light);
       min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
     }
-    .overlay {
-      position: fixed;
+    
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .bg-gradient-casino {
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+    }
+    
+    .text-primary {
+      color: var(--primary);
+    }
+    
+    .bg-primary {
+      background-color: var(--primary);
+    }
+    
+    .border-primary {
+      border-color: var(--primary);
+    }
+    
+    .btn {
+      @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 ease-in-out;
+    }
+    
+    .btn-primary {
+      @apply bg-primary text-dark hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30;
+    }
+    
+    .btn-secondary {
+      @apply bg-secondary text-light hover:bg-blue-900 hover:shadow-lg hover:shadow-blue-900/30;
+    }
+    
+    .btn-outline {
+      @apply border-2 border-primary text-primary hover:bg-primary hover:text-dark;
+    }
+    
+    .game-card {
+      @apply rounded-xl overflow-hidden transition-all duration-300 ease-in-out;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px var(--glow);
+      border-color: var(--primary);
+    }
+    
+    .chip {
+      @apply rounded-full flex items-center justify-center font-bold;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle at center, var(--primary) 0%, var(--primary-dark) 100%);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: spin-chip 4s infinite linear;
+    }
+    
+    .chip-small {
+      width: 30px;
+      height: 30px;
+      font-size: 0.8rem;
+    }
+    
+    @keyframes spin-chip {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    
+    .glow {
+      animation: glow 2s infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { box-shadow: 0 0 5px var(--glow); }
+      to { box-shadow: 0 0 20px var(--glow); }
+    }
+    
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 20s linear infinite;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    .modal-overlay {
+      @apply fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+      @apply bg-gradient-to-b from-dark to-darker rounded-xl p-6 max-w-md w-full;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    
+    .tab-active {
+      @apply bg-primary text-dark font-bold;
+    }
+    
+    .tab-inactive {
+      @apply bg-dark text-light hover:bg-slate-800;
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+      transition: width 0.3s ease;
+    }
+    
+    .jackpot-counter {
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 0 10px var(--glow);
+    }
+    
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    
+    .card-animation {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 58, 138, 0.7));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .card-icon {
+      font-size: 4rem;
+      color: var(--primary);
+      text-shadow: 0 0 15px var(--glow);
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .particles {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: -1;
+      pointer-events: none;
     }
-    .game-card {
-      animation: fadeIn 0.7s ease-out;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 2px solid var(--primary-gold);
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-      background-color: rgba(26, 26, 26, 0.9);
-    }
-    .game-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 30px var(--shadow-gold);
-    }
-    .game-card::before {
-      content: '';
+    
+    .particle {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
-      z-index: 1;
-      transition: background 0.3s ease;
-    }
-    .game-card:hover::before {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
-    }
-    .modal {
-      animation: fadeIn 0.3s ease-out;
-      backdrop-filter: blur(10px);
-    }
-    .modal-content {
-      animation: fadeIn 0.5s ease-out;
-      border: 2px solid rgba(212, 175, 55, 0.5);
-      background: var(--darker-bg);
-      box-shadow: 0 0 30px var(--shadow-gold);
-    }
-    .glow-effect {
-      animation: pulseGlow 2s infinite ease-in-out;
-    }
-    .spin-effect {
-      animation: spin 20s linear infinite;
-    }
-    @font-face {
-      font-family: 'Noto Sans';
-      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
-    }
-    .custom-range::-webkit-slider-thumb {
-      background: var(--primary-gold);
-      border: 2px solid var(--light-text);
-      height: 18px;
-      width: 18px;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
       border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      animation: particle-move 2s ease-in-out infinite;
+      opacity: 0.7;
     }
-    .custom-range::-webkit-slider-thumb:hover {
-      transform: scale(1.3);
+    
+    @keyframes particle-move {
+      0% { transform: translate(0, 0); opacity: 0.7; }
+      50% { opacity: 0.3; }
+      100% { transform: translate(var(--particle-x), var(--particle-y)); opacity: 0; }
     }
-    .custom-range::-webkit-slider-runnable-track {
-      background: #2d2d2d;
-      height: 5px;
-      border-radius: 3px;
-    }
-    .btn {
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .btn-primary {
-      background: var(--primary-gold);
-      color: var(--darker-bg);
-      box-shadow: 0 5px 15px var(--shadow-gold);
-    }
-    .btn-primary:hover {
-      background: #e6c34d;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px var(--shadow-gold);
-    }
-    .btn-secondary {
-      background: var(--secondary-red);
-      color: var(--light-text);
-      box-shadow: 0 5px 15px rgba(193, 31, 31, 0.4);
-    }
-    .btn-secondary:hover {
-      background: #d93636;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(193, 31, 31, 0.6);
-    }
-    .btn-success {
-      background: #28a745;
-      color: var(--light-text);
-      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
-    }
-    .btn-success:hover {
-      background: #2ecc71;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
-    }
-    .logo {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-gold);
-      text-shadow: 0 0 10px var(--shadow-gold);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    header {
-      background: rgba(0, 0, 0, 0.9);
-      border-bottom: 2px solid var(--primary-gold);
-      box-shadow: 0 4px 20px var(--shadow-gold);
-      padding: 20px 0;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .nav-links a {
-      font-size: 1rem;
-      padding: 8px 16px;
-    }
-    .game-card h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      text-shadow: 0 0 5px var(--shadow-gold);
-    }
-    .game-card p {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    .game-card .text-sm {
-      font-size: 0.85rem;
-    }
-    footer {
-      background: rgba(0, 0, 0, 0.9);
-      padding: 20px 0;
-      border-top: 2px solid var(--primary-gold);
+    
+    @media (max-width: 640px) {
+      .game-card {
+        height: auto;
+      }
+      .card-animation {
+        height: 120px;
+      }
+      .card-icon {
+        font-size: 3rem;
+      }
+      .chip {
+        width: 40px;
+        height: 40px;
+      }
+      .chip-small {
+        width: 25px;
+        height: 25px;
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="overlay"></div>
+<body class="bg-gradient-casino">
+  <!-- Top Bar -->
+  <div class="bg-dark py-2 px-4 flex items-center justify-between border-b border-slate-700">
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center">
+        <i class="fas fa-coins text-primary mr-2"></i>
+        <span id="balance" class="font-bold">10,000</span>
+      </div>
+      <div class="flex items-center">
+        <i class="fas fa-gem text-blue-400 mr-2"></i>
+        <span class="font-bold">500</span>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <button id="deposit-btn" class="btn btn-outline px-4 py-2 text-sm">
+        <i class="fas fa-plus mr-1"></i> Deposit
+      </button>
+      <div class="relative dropdown">
+        <button class="flex items-center space-x-2 bg-slate-800 px-3 py-2 rounded-lg">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-8 h-8 rounded-full">
+          <span>JohnDoe</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </button>
+        <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-dark rounded-lg shadow-lg z-50 border border-slate-700">
+          <a href="#" class="block px-4 py-2 hover:bg-slate-700"><i class="fas fa-user mr-2"></i> Profile</a>
+          <a href="#" class="block px-4 py-2 hover:bg-slate-700"><i class="fas fa-cog mr-2"></i> Settings</a>
+          <a href="#" class="block px-4 py-2 hover:bg-slate-700"><i class="fas fa-history mr-2"></i> History</a>
+          <a href="#" class="block px-4 py-2 hover:bg-slate-700 text-danger"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <header class="w-full relative z-10">
-    <div class="container flex justify-between items-center">
-      <div class="logo animate-fadeIn">
-        <i class="fas fa-crown text-4xl spin-effect"></i>
-        <span>Casino Game </span>
-      </div>
-<!--       <nav class="nav-links flex gap-3 flex-wrap">
-        <a href="#"  class="btn btn-primary">
-          <i class="fas fa-cog"></i> Settings
-        </a>
-        <a href="#" \ class="btn btn-primary">
-          <i class="fas fa-trophy"></i> Leaderboard
-        </a>
-        <a href="#"  class="btn btn-primary">
-          <i class="fas fa-user"></i> Profile
-        </a>
-        <a href="#contact" class="btn btn-primary">
-          <i class="fas fa-envelope"></i> Contact
-        </a>
-      </nav> -->
-    </div>
-    <div class="container mt-4 text-center">
-      <p class="text-lg md:text-xl text-gray-300 animate-fadeIn delay-200">
-        A Premium Destination for Thrilling Space-Themed Games!
-      </p>
-    </div>
-  </header>
-
-  <main class="container py-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1591625009757-452a4e55d3e8?q=80&w=300&auto=format&fit=crop');" onclick="startGame('space-dodge')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">Space Dodge</h2>
-          <p class="text-gray-200 mb-4">Dodge asteroids with your spaceship!</p>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="space-dodge-score">0</span></div> -->
-          <a href="space_dodge_game">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1618517351616-38fb9e67be53?q=80&w=300&auto=format&fit=crop');" onclick="startGame('alien-shooter')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">Alien Shooter</h2>
-          <p class="text-gray-200 mb-4">Blast aliens, upgrade weapons!</p>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Hard</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="alien-shooter-score">0</span></div> -->
-          <a href="alien_shooter">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=300&auto=format&fit=crop');" onclick="startGame('cosmic-race')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">Super 6 </h2>
-          <p class="text-gray-200 mb-4">Super 6 | 5% Commission Baccarat!</p>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Easy</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="cosmic-race-score">0</span></div> -->
-          <a href="super6">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1601944179066-37a53c35a916?q=80&w=300&auto=format&fit=crop');" onclick="startGame('star-puzzle')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">Dragon Tiger</h2>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="star-puzzle-score">0</span></div> -->
-          <a href="dragon-tiger">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-      <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1597776826059-81e3912c9c73?q=80&w=300&auto=format&fit=crop');" onclick="startGame('roulette')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">Roulette</h2>
-          <p class="text-gray-200 mb-4">Spin the wheel, place your bets!</p>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="roulette-score">0</span></div> -->
-          <a href="roulette">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-       <div class="game-card glow-effect" style="background-image: url('https://images.unsplash.com/photo-1597776826059-81e3912c9c73?q=80&w=300&auto=format&fit=crop');" onclick="startGame('roulette')">
-        <div class="relative z-10 p-6 text-center">
-          <h2 class="text-[var(--primary-gold)] mb-3">JackPot Slotss </h2>
-          <p class="text-gray-200 mb-4">Spin , place your bets!</p>
-<!--           <div class="text-[var(--table-green)] mb-2"><i class="fas fa-signal mr-2"></i> Difficulty: Medium</div>
-          <div class="text-yellow-400 mb-4"><i class="fas fa-star mr-2"></i> High Score: <span id="roulette-score">0</span></div> -->
-          <a href="jackpot">
-            <button class="btn btn-success">
-              <i class="fas fa-play"></i> Play Now
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="settings">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('settings')">
-        <i class="fas fa-times"></i>
-      </button>
-      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
-        <i class="fas fa-cog mr-3 text-[var(--primary-gold)]"></i> Settings
-      </h2>
-      <label class="block text-sm mb-2 text-gray-200">Sound Volume:</label>
-      <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.3" class="w-full mb-6 custom-range">
-      <label class="block text-sm mb-2 text-gray-200">Difficulty:</label>
-      <input type="range" id="difficulty" min="1" max="3" step="1" value="2" class="w-full mb-2 custom-range">
-      <p class="text-sm text-gray-200 mb-6">Difficulty: <span id="difficultyLabel">Medium</span></p>
-      <label class="block text-sm mb-2 text-gray-200 flex items-center">
-        <input type="checkbox" id="theme" checked class="mr-2 w-5 h-5 text-[var(--primary-gold)] bg-gray-700 border-gray-600 rounded focus:ring-[var(--primary-gold)]">
-        Dark Mode
-      </label>
+  <!-- Jackpot Banner -->
+  <div class="bg-gradient-to-r from-primary to-primary-dark py-3 px-4">
+    <div class="marquee">
+      <span class="font-bold jackpot-counter text-xl">
+        <i class="fas fa-trophy mr-2"></i> JACKPOT: $1,245,876 
+        <i class="fas fa-arrow-right mx-4"></i> 
+        Last Winner: Mark W. from Texas won $324,500 
+        <i class="fas fa-arrow-right mx-4"></i> 
+        Play now for your chance to win!
+      </span>
     </div>
   </div>
-
-  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="leaderboard">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('leaderboard')">
-        <i class="fas fa-times"></i>
-      </button>
-      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
-        <i class="fas fa-trophy mr-3 text-[var(--primary-gold)]"></i> Leaderboard
-      </h2>
-      <ul class="list-none p-0 space-y-3">
-        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
-          <span>Space Dodge: Player1</span>
-          <span class="text-yellow-400">1200</span>
-        </li>
-        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
-          <span>Alien Shooter: Player2</span>
-          <span class="text-yellow-400">950</span>
-        </li>
-        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
-          <span>Cosmic Race: Player3</span>
-          <span class="text-yellow-400">300</span>
-        </li>
-        <li class="text-sm py-2 border-b border-gray-700 flex justify-between items-center">
-          <span>Dragon Tiger: Player4</span>
-          <span class="text-yellow-400">500</span>
-        </li>
-        <li class="text-sm py-2 flex justify-between items-center">
-          <span>Roulette: Player5</span>
-          <span class="text-yellow-400">800</span>
-        </li>
-      </ul>
+  
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Sidebar -->
+      <div class="lg:w-1/4">
+        <div class="bg-dark rounded-xl p-6 mb-6 border border-slate-700">
+          <h3 class="font-serif text-xl text-primary mb-4">Categories</h3>
+          <ul class="space-y-2">
+            <li><a href="#" data-filter="all" class="filter-btn flex items-center py-2 px-3 bg-slate-800 rounded-lg"><i class="fas fa-dice mr-3"></i> All Games</a></li>
+            <li><a href="#" data-filter="card" class="filter-btn flex items-center py-2 px-3 hover:bg-slate-800 rounded-lg"><i class="fas fa-cards mr-3"></i> Card Games</a></li>
+            <li><a href="#" data-filter="table" class="filter-btn flex items-center py-2 px-3 hover:bg-slate-800 rounded-lg"><i class="fas fa-table mr-3"></i> Table Games</a></li>
+            <li><a href="#" data-filter="slots" class="filter-btn flex items-center py-2 px-3 hover:bg-slate-800 rounded-lg"><i class="fas fa-rocket mr-3"></i> Slots</a></li>
+            <li><a href="#" data-filter="shooter" class="filter-btn flex items-center py-2 px-3 hover:bg-slate-800 rounded-lg"><i class="fas fa-crosshairs mr-3"></i> Shooter</a></li>
+            <li><a href="#" data-filter="jackpot" class="filter-btn flex items-center py-2 px-3 hover:bg-slate-800 rounded-lg"><i class="fas fa-trophy mr-3"></i> Jackpots</a></li>
+          </ul>
+        </div>
+        
+        <div class="bg-dark rounded-xl p-6 border border-slate-700">
+          <h3 class="font-serif text-xl text-primary mb-4">Live Tournaments</h3>
+          <div class="space-y-4">
+            <div class="bg-slate-800 rounded-lg p-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold">Blackjack Masters</span>
+                <span class="text-xs bg-primary-dark px-2 py-1 rounded">Live</span>
+              </div>
+              <div class="progress-bar rounded-full mb-2">
+                <div class="progress-fill rounded-full" style="width: 70%"></div>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span>70% filled</span>
+                <span>$30,000 prize</span>
+              </div>
+            </div>
+            
+            <div class="bg-slate-800 rounded-lg p-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold">Poker Championship</span>
+                <span class="text-xs bg-primary-dark px-2 py-1 rounded">Live</span>
+              </div>
+              <div class="progress-bar rounded-full mb-2">
+                <div class="progress-fill rounded-full" style="width: 50%"></div>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span>50% filled</span>
+                <span>$20,000 prize</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary w-full mt-4">View All</button>
+        </div>
+      </div>
+      
+      <!-- Main Games Area -->
+      <div class="lg:w-3/4">
+        <!-- Featured Game -->
+        <div class="relative rounded-xl overflow-hidden mb-8 h-64">
+          <div class="card-animation">
+            <i class="fas fa-cards card-icon"></i>
+            <div class="particles">
+              <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+              <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+              <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 w-full">
+            <div class="flex justify-between items-end">
+              <div>
+                <h2 class="font-serif text-3xl font-bold text-primary mb-1">Blackjack Blitz</h2>
+                <p class="text-light mb-4">Fast-paced 21 action with massive payouts</p>
+                <a href="blackjack_blitz.html" class="btn btn-primary glow">
+                  <i class="fas fa-play mr-2"></i> Play Now
+                </a>
+              </div>
+              <div class="text-right">
+                <p class="text-xs mb-1">Current Jackpot</p>
+                <p class="font-serif text-2xl font-bold text-primary">$50,000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Game Categories Tabs -->
+        <div class="flex mb-6 border-b border-slate-700">
+          <button data-tab="popular" class="tab-btn tab-active px-6 py-3 rounded-t-lg">Popular</button>
+          <button data-tab="card" class="tab-btn tab-inactive px-6 py-3 rounded-t-lg">Card Games</button>
+          <button data-tab="table" class="tab-btn tab-inactive px-6 py-3 rounded-t-lg">Table Games</button>
+          <button data-tab="slots" class="tab-btn tab-inactive px-6 py-3 rounded-t-lg">Slots</button>
+          <button data-tab="shooter" class="tab-btn tab-inactive px-6 py-3 rounded-t-lg">Shooter</button>
+        </div>
+        
+        <!-- Games Grid -->
+        <div id="games-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Blackjack Blitz -->
+          <div class="game-card pulse" data-category="popular card table">
+            <div class="card-animation">
+              <i class="fas fa-cards card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">HOT</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Blackjack Blitz</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.9</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Fast-paced 21 action with massive payouts</p>
+              <div class="flex justify-between items-center">
+                <a href="blackjack_blitz.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 2.5K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Poker Showdown -->
+          <div class="game-card pulse" data-category="popular card table">
+            <div class="card-animation">
+              <i class="fas fa-dice card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">NEW</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Poker Showdown</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.8</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Three-card poker with thrilling showdowns</p>
+              <div class="flex justify-between items-center">
+                <a href="poker_showdown.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 1.8K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Baccarat Battle -->
+          <div class="game-card pulse" data-category="popular card table">
+            <div class="card-animation">
+              <i class="fas fa-gem card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">VIP</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Baccarat Battle</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.7</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Elegant baccarat with high-stakes drama</p>
+              <div class="flex justify-between items-center">
+                <a href="baccarat_battle.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 1.2K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Space Dodge -->
+          <div class="game-card pulse" data-category="popular shooter">
+            <div class="card-animation">
+              <i class="fas fa-rocket card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">NEW</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Space Dodge</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.8</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Navigate asteroids in this thrilling space adventure</p>
+              <div class="flex justify-between items-center">
+                <a href="space_dodge.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 1.5K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Alien Shooter -->
+          <div class="game-card pulse" data-category="popular shooter">
+            <div class="card-animation">
+              <i class="fas fa-crosshairs card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">HOT</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Alien Shooter</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.9</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Defend Earth from alien invaders</p>
+              <div class="flex justify-between items-center">
+                <a href="alien_shooter.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 2.0K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Super 6 -->
+          <div class="game-card pulse" data-category="popular card table">
+            <div class="card-animation">
+              <i class="fas fa-diamond card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">VIP</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Super 6</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.7</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">High-stakes baccarat variant with side bets</p>
+              <div class="flex justify-between items-center">
+                <a href="super6.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 1.0K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dragon Tiger -->
+          <div class="game-card pulse" data-category="popular card table">
+            <div class="card-animation">
+              <i class="fas fa-dragon card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">LIVE</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Dragon Tiger</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.6</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Fast-paced Asian card game</p>
+              <div class="flex justify-between items-center">
+                <a href="dragon-tiger.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 1.3K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Roulette -->
+          <div class="game-card pulse" data-category="popular table">
+            <div class="card-animation">
+              <i class="fas fa-circle-notch card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">CLASSIC</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Roulette</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.8</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Classic casino game with modern twists</p>
+              <div class="flex justify-between items-center">
+                <a href="roulette.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 2.2K playing
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Jackpot Slots -->
+          <div class="game-card pulse" data-category="popular slots jackpot">
+            <div class="card-animation">
+              <i class="fas fa-trophy card-icon"></i>
+              <div class="particles">
+                <div class="particle" style="--particle-x: 50px; --particle-y: -50px; animation-delay: 0s;"></div>
+                <div class="particle" style="--particle-x: -30px; --particle-y: 40px; animation-delay: 0.5s;"></div>
+                <div class="particle" style="--particle-x: 40px; --particle-y: 30px; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute top-2 right-2 chip chip-small">JACKPOT</div>
+              <div class="absolute bottom-2 left-2 flex space-x-1">
+                <div class="chip chip-small">$</div>
+                <div class="chip chip-small">18+</div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg">Jackpot Slots</h3>
+                <div class="flex items-center text-yellow-400">
+                  <i class="fas fa-star"></i>
+                  <span class="ml-1">4.9</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mb-4">Spin for massive progressive jackpots</p>
+              <div class="flex justify-between items-center">
+                <a href="jackpot.html" class="btn btn-primary px-4 py-2 text-sm play-btn">
+                  <i class="fas fa-play mr-1"></i> Play
+                </a>
+                <div class="text-xs text-slate-400">
+                  <i class="fas fa-users mr-1"></i> 3.0K playing
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- View More Button -->
+        <div class="text-center mt-8">
+          <button id="load-more" class="btn btn-outline px-8 py-3">
+            <i class="fas fa-chevron-down mr-2"></i> Load More Games
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden" id="profile">
-    <div class="modal-content p-8 rounded-2xl w-full max-w-md relative">
-      <button class="absolute top-4 right-4 btn btn-secondary" onclick="hidePanel('profile')">
-        <i class="fas fa-times"></i>
-      </button>
-      <h2 class="text-2xl font-bold text-[var(--primary-gold)] mb-6 flex items-center">
-        <i class="fas fa-user mr-3 text-[var(--primary-gold)]"></i> Profile
-      </h2>
-      <label class="block text-sm mb-2 text-gray-200">Username:</label>
-      <input type="text" id="username" value="Guest" class="w-full p-3 bg-gray-800 text-white rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--primary-gold)]">
-      <label class="block text-sm mb-2 text-gray-200">Email:</label>
-      <input type="email" id="email" value="guest@example.com" class="w-full p-3 bg-gray-800 text-white rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--primary-gold)]">
-      <p class="text-sm mb-2 text-gray-200">Games Played: <span id="gamesPlayed">0</span></p>
-      <p class="text-sm mb-6 text-gray-200">Total Score: <span id="totalScore">0</span></p>
-      <button onclick="saveProfile()" class="btn btn-success">
-        <i class="fas fa-save"></i> Save Profile
-      </button>
+  
+  <!-- Footer -->
+  <footer class="bg-dark py-8 border-t border-slate-700">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="font-serif text-xl text-primary mb-4">Best Casino</h3>
+          <p class="text-slate-300 mb-4">The premier destination for high-quality casino games and entertainment.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-slate-400 hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-light mb-4">Games</h4>
+            <ul class="space-y-2">
+              <li><a href="blackjack_blitz.html" class="text-slate-400 hover:text-primary">Blackjack Blitz</a></li>
+              <li><a href="poker_showdown.html" class="text-slate-400 hover:text-primary">Poker Showdown</a></li>
+              <li><a href="baccarat_battle.html" class="text-slate-400 hover:text-primary">Baccarat Battle</a></a>
+              <li><a href="space_dodge.html" class="text-slate-400 hover:text-primary">Space Dodge</a></li>
+              <li><a href="alien_shooter.html" class="text-slate-400 hover:text-primary">Alien Shooter</a></li>
+              <li><a href="super6.html" class="text-slate-400 hover:text-primary">Super 6</a></li>
+              <li><a href="dragon-tiger.html" class="text-slate-400 hover:text-primary">Dragon Tiger</a></li>
+              <li><a href="roulette.html" class="text-right hover:text-primary">Roulette</a></li>
+              <li><a href="jackpot.html" class="text-right hover:text-primary">Jackpot Slots</a></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-light mb-4">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-slate-400 hover:text-primary">About Us</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">Careers</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">News</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">Partners</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">Contact</a></li>
+          </ul>
+        </div>
+        <div class="div">
+          <h4 class="font-bold text-light mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-slate-400 hover:text-primary">Help Center</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">FAQs</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">home</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">Terms & Conditions</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-primary">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-700 pt-6">
+        <p class="text-center text-slate-500 text-sm">
+          © 2025 Best Casino. All rights reserved. | 18+ Only. Gambling can be addictive. Play responsibly.
+        </p>
+      </div>
     </div>
   </div>
-
-  <footer class="w-full text-center text-gray-300 text-sm">
-    <div class="container">
-      <p>© 2025 Cosmic Casino Hub. All rights reserved.</p>
-      <p class="mt-2">Contact: <a href="mailto:support@cosmiccasinohub.com" class="text-[var(--primary-gold)] hover:underline">support@cosmiccasinohub.com</a></p>
-      <p class="mt-2">Follow us: 
-        <a href="https://twitter.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-twitter mr-1"></i> Twitter</a> | 
-        <a href="https://facebook.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-facebook mr-1"></i> Facebook</a> | 
-        <a href="https://instagram.com" class="text-[var(--primary-gold)] hover:underline" target="_blank"><i class="fab fa-instagram mr-1"></i> Instagram</a>
-      </p>
+  
+</div>
+  
+  <!-- Deposit Modal -->
+  <div id="depositModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <div h3 class="font-serif text-xl text-primary font-bold">Deposit Funds</div>
+        <button type="button" id="close-btn" class="btn btn-secondary">
+          <i class="fas fa-times text-slate-400 hover:text-light"></i>
+        </button>
+      </div>
+      
+      <div class="mb-6">
+        <label class="block text-sm text-slate-400 mb-2">Amount</label>
+        <div class="relative">
+          <span class="absolute left-3 top-2 text-primary">$</span>
+          <input type="text" type="number" class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 pl-8 pr-4 focus:outline-none focus:ring-2" focus:ring-primary" placeholder="Enter amount">
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <label class="block text-sm text-slate-400 mb-2">Payment Method</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button class="bg-slate-800 hover:bg-slate-700 py-3 rounded-lg border border-slate-700">
+            <i class="fab fa-cc-visa text-2xl"></i>
+          </button>
+          
+          <button class="bg-slate-800 hover:bg-slate-700 py-3 rounded-lg border border-blue">
+            <i class="fab fa-cc-mastercard text-2xl"></i>
+            </button>
+            
+            <button class="bg-slate-800 hover:bg-slate-700 py-3 rounded-lg border-blue-700">
+            <i class="fab fa-cc-paypal text-2xl"></i>
+            </button>
+            <button class="bg-slate-800 hover:bg-blue-700 py-3 rounded-lg border border-blue-700">
+              <i class="fas fa-wallet text-2xl"></i>
+            </button>
+            <button class="bg-blue-800 hover:bg-blue-700 py-3 rounded-lg border border-blue-700">
+            <i class="fab fa-bitcoin text-2xl"></i>
+            </button>
+            <button class="bg-blue-800 hover:bg-blue-700 py-3 rounded-lg border border-blue-700">
+              <i class="fas fa-plus text-2xl"></i>
+            </button>
+          </div>
+        </div>
+        
+      </div>
+      
+      <button class="btn btn-primary w-full">
+        <i class="fas fa-lock mr-2"></i> Secure Deposit
+      </button>
+      </div>
     </div>
-  </footer>
-
+    
+  
+  </div>
+  
+  <audio id="coinSound" src="https://www.soundjay.com/mechanical/sounds/clip-stack-01.mp3" preload="auto"></audio>
+  <audio id="hoverSound" src="https://www.soundjay.com/buttons/sounds/beep-01.mp3" preload="auto"></audio>
+  
   <script>
-    function loadScores() {
-      const games = ['space-dodge', 'alien-shooter', 'cosmic-race', 'star-puzzle', 'roulette'];
-      games.forEach(game => {
-        const score = localStorage.getItem(`${game}-highScore`) || '0';
-        document.getElementId(`${game}-score`).textContent = score;
-      });
-      const gamesPlayed = localStorage.getItem('gamesPlayed') || '0';
-      const totalScore = localStorage.getItem('totalScore') || '0';
-      document.getElementById('gamesPlayed').textContent = gamesPlayed;
-      document.getElementById('totalScore').textContent = totalScore;
-      document.getElementById('username').value = localStorage.getItem('username') || 'Guest';
-      document.getElementById('email').value = localStorage.getItem('email') || 'guest@example.com';
-    }
-
-    function startGame(gameId) {
-      const gameFiles = {
-        'space-dodge': 'space-dodge.html',
-        'alien-shooter': 'alien-shooter.html',
-        'cosmic-race': 'cosmic-race.html',
-        'star-puzzle': 'star-puzzle.html',
-        'roulette': 'roulette.html'
-      };
-      window.location.href = gameFiles[gameId];
-      let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
-      gamesPlayed++;
-      localStorage.setItem('gamesPlayed', gamesPlayed);
-      document.getElementById('gamesPlayed').textContent = gamesPlayed;
-    }
-
-    function showPanel(panelId) {
-      document.getElementById(panelId).style.display = 'flex';
-    }
-
-    function hidePanel(panelId) {
-      document.getElementById(panelId).style.display = 'none';
-    }
-
-    const soundVolume = document.getElementById('soundVolume');
-    const difficulty = document.getElementById('difficulty');
-    const difficultyLabel = document.getElementById('difficultyLabel');
-    const theme = document.getElementById('theme');
-
-    soundVolume.addEventListener('input', () => {
-      localStorage.setItem('soundVolume', soundVolume.value);
-    });
-
-    difficulty.addEventListener('input', () => {
-      const levels = ['Easy', 'Medium', 'Hard'];
-      difficultyLabel.textContent = levels[difficulty.value - 1];
-      localStorage.setItem('difficulty', difficulty.value);
-    });
-
-    theme.addEventListener('change', () => {
-      if (theme.checked) {
-        document.body.style.background = "url('https://images.unsplash.com/photo-1580752300992-559f8e0734e0?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed";
-        document.body.style.backgroundSize = "cover";
-        document.querySelectorAll('.game-card').forEach(card => {
-          card.classList.remove('bg-gray-200', 'bg-opacity-80');
-          card.classList.add('bg-gray-900', 'bg-opacity-80');
-        });
-        document.querySelectorAll('.modal-content').forEach(content => {
-          content.classList.remove('bg-gray-200');
-          content.classList.add('bg-[var(--darker-bg)]');
-        });
-      } else {
-        document.body.style.background = "linear-gradient(to-b, #d3d3d3, #a9a9a9)";
-        document.querySelectorAll('.game-card').forEach(card => {
-          card.classList.remove('bg-gray-900', 'bg-opacity-80');
-          card.classList.add('bg-gray-200', 'bg-opacity-80');
-        });
-        document.querySelectorAll('.modal-content').forEach(content => {
-          content.classList.remove('bg-[var(--darker-bg)]');
-          content.classList.add('bg-gray-200');
-        });
-      }
-      localStorage.setItem('theme', theme.checked ? 'dark' : 'light');
-    });
-
-    function saveProfile() {
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
-      localStorage.setItem('username', username);
-      localStorage.setItem('email', email);
-      alert('Profile saved successfully!');
-    }
-
-    window.onload = () => {
-      loadScores();
-      soundVolume.value = localStorage.getItem('soundVolume') || '0.3';
-      difficulty.value = localStorage.getItem('difficulty') || '2';
-      const levels = ['Easy', 'Medium', 'Hard'];
-      difficultyLabel.textContent = levels[difficulty.value - 1];
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        theme.checked = false;
-        document.body.style.background = "linear-gradient(to-b, #d3d3d3, #a9a9a9)";
-        document.querySelectorAll('.game-card').forEach(card => {
-          card.classList.remove('bg-gray-900', 'bg-opacity-80');
-          card.classList.add('bg-gray-200', 'bg-opacity-80');
-        });
-        document.querySelectorAll('.modal-content').forEach(content => {
-          content.classList.remove('bg-[var(--darker-bg)]');
-          content.classList.add('bg-gray-200');
-        });
-      }
+    // Game data for filtering
+    const games = [
+      { id: 'blackjack_blitz', categories: ['popular', 'card', 'table'] },
+      { id: 'poker_showdown', categories: ['popular', 'card', 'table'] },
+      { id: 'baccarat_battle', categories: ['popular', 'card', 'table'] },
+      { id: 'space_dodge', categories: ['popular', 'shooter'] },
+      { id: 'alien_shooter', categories: ['popular', 'shooter'] },
+      { id: 'super6', categories: ['popular', 'card', 'table'] },
+      { id: 'dragon-tiger', categories: ['popular', 'card', 'table'] },
+      { id: 'roulette', categories: ['popular', 'table'] },
+      { id: 'jackpot_slots', categories: ['popular', 'slots', 'jackpot'] }
+    ];
+    
+    // DOM elements
+    const elements = {
+      balance: document.getElementById('balance'),
+      depositBtn: document.getElementById('deposit-btn'),
+      closeDepositBtn: document.getElementById('close-deposit-btn'),
+      depositModal: document.getElementById('depositModal'),
+      tabButtons: document.querySelectorAll('.tab-btn'),
+      filterButtons: document.querySelectorAll('.filter-btn'),
+      gamesGrid: document.getElementById('games-grid'),
+      gameCards: document.querySelectorAll('.game-card'),
+      playButtons: document.querySelectorAll('.play-btn'),
+      loadMoreBtn: document.getElementById('load-more-btn'),
+      coinSound: document.getElementById('coinSound'),
+      hoverSound: document.getElementById('hoverSound')
     };
+    
+    // Play sound
+    function playSound(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(function(e) {
+        console.log('Sound play prevented:', e);
+      });
+    }
+    
+    // Open modal
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+      playSound(elements.depositModal);
+    }
+    
+    // Close modal
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      playSound(elements.depositModal);
+    }
+    
+    // Filter games
+    function filterGames(category) {
+      elements.gameCards.forEach(function(card) {
+        const categories = card.dataset.category.split(' ');
+        if (category === 'all' || categories.includes(category)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+    
+    // Tab buttons
+    elements.tabButtons.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        elements.tabButtons.forEach(function(t) {
+          t.classList.replace('tab-active', 'tab-inactive');
+        });
+        tab.classList.replace('tab-inactive', 'tab-active');
+        })
+        const category = tab.dataset.tab;
+        filterGames(category);
+        playSound(elements.coinSound);
+      });
+    });
+    
+    // Sidebar filter
+    elements.filterButtons.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        elements.filterButtons.forEach(function(b) {
+          b.parentElement.classList.remove('bg-dark');
+          b.parentElement.classList.add('hover:bg-dark');
+        });
+        btn.parentElement.classList.add('bg-dark');
+        btn.parentElement.classList.remove('hover:bg-dark');
+        const category = element.dataset.filter;
+        filterGames(category);
+        playSound(elements.coinSound);
+      });
+    });
+    
+    // Play button hover sound
+    elements.playButtons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        playSound(elements.hoverSound);
+      });
+    });
+    
+    // Modal handling
+    elements.depositBtn.addEventListener('click', function() {
+      openModal('depositModal');
+    });
+    
+    elements.closeDepositBtn.addEventListener('click', function() {
+      closeModal('depositModal');
+      });
+    });
+    
+    // Dropdown handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(function(dropdown) {
+        const button = dropdown.querySelector('button');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        
+        button.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+          playSound(elements.coinSound);
+        });
+        
+        document.addEventListener('click', function(e) {
+          if (!dropdown.contains(e.target)) {
+            menu.classList.add('hidden');
+          }
+        });
+        
+      });
+      
+      // Initialize balance
+      elements.balance.textContent = '10,000';
+      
+      // Load more games (placeholder)
+      elements.loadMoreBtn.addEventListener('click', function() {
+        alert('More games coming soon!');
+        playSound(elements.coinSound);
+      });
+    });
   </script>
 </body>
 </html>
