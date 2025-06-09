@@ -1,342 +1,1325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Jackpot Slot</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&display=swap');
-    
-    body {
-      font-family: 'Exo 2', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    .bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-    .slot-machine {
-      background: linear-gradient(135deg, rgba(10, 10, 25, 0.9), rgba(25, 25, 50, 0.8));
-      border-radius: 30px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(0, 255, 255, 0.3);
-      padding: 50px;
-      border: 4px solid #00ffff;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .slot-machine::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, transparent 60%);
-      animation: pulseGlow 6s ease-in-out infinite;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 0.4; }
-      50% { transform: scale(1.15); opacity: 0.7; }
-    }
-    .reel {
-      width: 160px;
-      height: 160px;
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 80px;
-      background: linear-gradient(45deg, #1e1e3f, #3b3b6b);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 255, 255, 0.2);
-      border: 3px solid #00ffcc;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.2s ease;
-    }
-    .reel::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, rgba(0, 255, 255, 0.3), transparent);
-      pointer-events: none;
-    }
-    .spinning {
-      animation: spinReel 0.12s linear infinite;
-    }
-    @keyframes spinReel {
-      0% { transform: translateY(30px) rotate(3deg) scale(0.95); opacity: 0.5; }
-      50% { transform: translateY(-30px) rotate(-3deg) scale(1.05); opacity: 0.8; }
-      100% { transform: translateY(30px) rotate(3deg) scale(0.95); opacity: 0.5; }
-    }
-    .win-flash {
-      animation: winFlash 0.3s ease-in-out 5;
-    }
-    @keyframes winFlash {
-      0% { background: linear-gradient(45deg, #1e1e3f, #3b3b6b); border-color: #00ffcc; }
-      50% { background: linear-gradient(45deg, #ff00ff, #00ffff); border-color: #ff00ff; transform: scale(1.1); }
-      100% { background: linear-gradient(45deg, #1e1e3f, #3b3b6b); border-color: #00ffcc; }
-    }
-    .btn-spin {
-      background: linear-gradient(45deg, #ff00ff, #ff66cc);
-      box-shadow: 0 10px 25px rgba(255, 0, 255, 0.6);
-      transition: all 0.4s ease;
-    }
-    .btn-spin:hover {
-      transform: scale(1.15) rotate(4deg);
-      box-shadow: 0 15px 35px rgba(255, 0, 255, 0.8);
-      background: linear-gradient(45deg, #ff66cc, #ff00ff);
-    }
-    .btn-reset {
-      background: linear-gradient(45deg, #00ff99, #00ffcc);
-      box-shadow: 0 10px 25px rgba(0, 255, 153, 0.6);
-      transition: all 0.4s ease;
-    }
-    .btn-reset:hover {
-      transform: scale(1.15) rotate(4deg);
-      box-shadow: 0 15px 35px rgba(0, 255, 153, 0.8);
-      background: linear-gradient(45deg, #00ffcc, #00ff99);
-    }
-    .stats-panel {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      border: 2px solid rgba(0, 255, 255, 0.4);
-    }
-    .result-glow {
-      animation: resultGlow 0.8s ease-in-out infinite;
-    }
-    @keyframes resultGlow {
-      0%, 100% { color: #00ffcc; text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffcc; }
-      50% { color: #ff00ff; text-shadow: 0 0 15px #00ffcc, 0 0 30px #ff00ff; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpot Slot Frenzy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ffd700; /* Gold for jackpot vibe */
+            --secondary: #ff2d2d; /* Bright red for excitement */
+            --dark: #1a1a1a; /* Dark casino background */
+            --darker: #0d0d0d; /* Deeper black for depth */
+            --light: #ffffff; /* White for contrast */
+            --success: #00ff00; /* Neon green for wins */
+            --danger: #ff4500; /* Orange-red for losses */
+            --glow: rgba(255, 215, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #2a2a2a, var(--darker));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1611601322175-ef8ec8c85f01?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            background: linear-gradient(90deg, var(--darker), var(--primary), var(--darker));
+            border-bottom: 3px solid var(--secondary);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .logo {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--glow), 0 0 25px var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            animation: spinCoin 2s infinite linear;
+        }
+
+        @keyframes spinCoin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .balance {
+            background: var(--darker);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .balance i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 992px) {
+            .game-area {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .game-board {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px var(--glow), inset 0 0 10px var(--secondary);
+            position: relative;
+        }
+
+        .jackpot-counter {
+            text-align: center;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            color: var(--success);
+            text-shadow: 0 0 10px var(--success);
+            margin-bottom: 20px;
+            padding: 10px;
+            background: var(--darker);
+            border-radius: 10px;
+            border: 2px dashed var(--primary);
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .reels {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--secondary);
+            width: clamp(50px, 12vw, 70px);
+            height: clamp(50px, 12vw, 70px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            z-index: 10;
+            box-shadow: 0 0 25px var(--secondary);
+        }
+
+        .card-slot {
+            width: clamp(100px, 25vw, 180px);
+            height: clamp(150px, 35vw, 260px);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(50, 50, 50, 0.8), rgba(20, 20, 20, 0.9));
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 5px var(--glow);
+            position: relative;
+            /* overflow: hidden; */
+            transition: all 0.3s ease;
+            border: 3px solid var(--primary);
+        }
+
+        .card-slot::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(255, 215, 0, 0.4) 50%,
+                transparent 55%
+            );
+            transform: rotate(45deg);
+            z-index: 1;
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .card-slot img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-label {
+            position: absolute;
+            top: -20px;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--primary);
+            text-shadow: 0 0 12px var(--glow);
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: clamp(150px, 40vw, 200px);
+        }
+
+        .btn-spin {
+            background: linear-gradient(45deg, var(--primary), #ffeb3b);
+            color: var(--darker);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .btn-spin:hover {
+            background: linear-gradient(45deg, #ffeb3b, var(--primary));
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 25px var(--glow);
+        }
+
+        .btn-spin:disabled {
+            background: #555;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: linear-gradient(45deg, var(--secondary), #ff6347);
+            color: var(--light);
+            box-shadow: 0 5px 20px rgba(255, 45, 45, 0.5);
+        }
+
+        .btn-reset:hover {
+            background: linear-gradient(45deg, #ff6347, var(--secondary));
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 45, 45, 0.7);
+        }
+
+        .lever {
+            width: clamp(50px, 15vw, 80px);
+            height: clamp(50px, 15vw, 80px);
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .lever:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 30px var(--secondary);
+        }
+
+        .lever:active {
+            transform: scale(0.95) rotate(10deg);
+        }
+
+        .betting-panel {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 15px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px var(--glow), inset 0 0 10px var(--secondary);
+        }
+
+        .panel-title {
+            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .bet-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 576px) {
+            .bet-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .bet-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bet-option {
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid transparent;
+            background: rgba(50, 50, 50, 0.5);
+        }
+
+        .bet-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .bet-option.dragon {
+            border-color: var(--secondary);
+        }
+
+        .bet-option.tiger {
+            border-color: #00b7eb;
+        }
+
+        .bet-option.jackpot {
+            border-color: var(--success);
+        }
+
+        @media (min-width: 576px) {
+            .bet-option.jackpot {
+                grid-column: span 2;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .bet-option.jackpot {
+                grid-column: span 1;
+            }
+        }
+
+        .bet-option.selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--glow);
+            border-color: var(--primary);
+        }
+
+        .bet-option.selected.dragon {
+            background: linear-gradient(45deg, rgba(255, 45, 45, 0.6), rgba(255, 99, 71, 0.6));
+        }
+
+        .bet-option.selected.tiger {
+            background: linear-gradient(45deg, rgba(0, 183, 235, 0.6), rgba(0, 255, 255, 0.6));
+        }
+
+        .bet-option.selected.jackpot {
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.6), rgba(50, 205, 50, 0.6));
+        }
+
+        .bet-option .odds {
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            color: var(--primary);
+            margin-top: 5px;
+            text-shadow: 0 0 5px var(--glow);
+        }
+
+        .bet-controls {
+            margin-top: 15px;
+        }
+
+        .bet-amount {
+            margin-bottom: 15px;
+        }
+
+        .amount-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            color: var(--primary);
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--light);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 15px var(--success);
+        }
+
+        .quick-bets {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chip {
+            width: clamp(40px, 10vw, 60px);
+            height: clamp(40px, 10vw, 60px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: radial-gradient(circle at 30% 30%, var(--light), var(--primary));
+            color: var(--darker);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        .chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .chip.active {
+            transform: scale(1.15);
+            box-shadow: 0 0 25px var(--success);
+            border: 2px solid var(--success);
+        }
+
+        .game-info {
+            margin-top: 20px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            text-align: center;
+        }
+
+        .result-display {
+            text-align: center;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 900;
+            margin: 15px 0;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .win {
+            color: var(--success);
+            text-shadow: 0 0 15px var(--success);
+        }
+
+        .lose {
+            color: var(--danger);
+            text-shadow: 0 0 15px var(--danger);
+        }
+
+        .history {
+            margin-top: 30px;
+        }
+
+        .history-title {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .history-items {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+        }
+
+        .history-item {
+            min-width: clamp(50px, 15vw, 60px);
+            height: clamp(70px, 20vw, 80px);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .history-item.win {
+            border-color: var(--success);
+            box-shadow: 0 0 15px var(--success);
+        }
+
+        .history-item.lose {
+            border-color: var(--danger);
+            box-shadow: 0 0 15px var(--danger);
+        }
+
+        .history-item .outcome {
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            margin-top: 5px;
+        }
+
+        .sound-toggle {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
+            border-radius: 50%;
+            background: var(--darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            z-index: 100;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        @keyframes dealCard {
+            0% { transform: translateY(20px) rotateY(0deg); opacity: 0; }
+            50% { transform: translateY(0) rotateY(90deg); opacity: 0.5; }
+            100% { transform: translateY(0) rotateY(0deg); opacity: 1; }
+        }
+
+        .card-deal {
+            animation: dealCard 0.6s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-panel {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reels {
+                position: static;
+                transform: none;
+                margin: 10px 0;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .game-board, .betting-panel {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <canvas class="bg-canvas" id="bgCanvas"></canvas>
-  <div class="slot-machine relative z-10">
-    <h1 class="text-6xl font-extrabold text-cyan-300 mb-10 text-center animate__animated animate__bounceIn">Ultimate Jackpot Slot</h1>
-    <div class="flex justify-center gap-10 mb-12">
-      <div class="reel" id="reel1">?</div>
-      <div class="reel" id="reel2">?</div>
-      <div class="reel" id="reel3">?</div>
-    </div>
-    <div class="stats-panel w-full max-w-xl mx-auto mb-10 text-cyan-200">
-      <div class="flex justify-between text-xl">
-        <span>Balance: $</span>
-        <span id="balance" class="font-bold">100.00</span>
-      </div>
-      <div class="flex justify-between text-xl mt-4">
-        <span>Total Wins: </span>
-        <span id="totalWins" class="font-bold">0</span>
-      </div>
-      <div class="flex justify-between text-xl mt-4">
-        <span>Total Spins: </span>
-        <span id="totalSpins" class="font-bold">0</span>
-      </div>
-    </div>
-    <div class="controls w-full max-w-xl mx-auto">
-      <div class="mb-8">
-        <label for="bet" class="block text-cyan-300 font-bold text-xl mb-3">Bet Amount ($):</label>
-        <input type="number" id="bet" value="1" min="0.1" step="0.1" class="w-full p-5 rounded-2xl bg-black bg-opacity-20 text-cyan-100 border border-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-500 animate__animated animate__fadeIn">
-      </div>
-      <div class="flex gap-8 justify-center">
-        <button class="btn-spin text-white font-bold py-5 px-10 rounded-2xl animate__animated animate__jello animate__delay-1s" onclick="spin()">Spin!</button>
-        <button class="btn-reset text-white font-bold py-5 px-10 rounded-2xl animate__animated animate__jello animate__delay-1s" onclick="resetGame()">Reset</button>
-      </div>
-    </div>
-    <div id="result" class="mt-10 text-3xl font-bold text-cyan-300 text-center"></div>
-  </div>
-
-  <script>
-    const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '⭐', '💎', '7'];
-    let balance = 100.00;
-    let totalWins = 0;
-    let totalSpins = 0;
-    let isSpinning = false;
-
-    const payouts = {
-      '7,7,7': 50,    // Jackpot: 50x
-      '💎,💎,💎': 20, // Diamond: 20x
-      '⭐,⭐,⭐': 10,  // Star: 10x
-      '🔔,🔔,🔔': 8,  // Bell: 8x
-      '🍇,🍇,🍇': 5,  // Grapes: 5x
-      '🍊,🍊,🍊': 4,  // Orange: 4x
-      '🍋,🍋,🍋': 3,  // Lemon: 3x
-      '🍒,🍒,🍒': 2,  // Cherry: 2x
-      'partial': 1.5  // Any two matching symbols
-    };
-
-    // Background particle animation
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const particles = [];
+    <div class="overlay"></div>
     
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 5 + 2;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.color = `hsl(${Math.random() * 360}, 70%, 50%)`;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-      }
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>Jackpot Slot Frenzy</span>
+            </div>
+            <div class="user-panel">
+                <div class="balance">
+                    <i class="fas fa-coins"></i>
+                    <span id="balance">10,000</span>
+                </div>
+                <button class="btn btn-reset" id="help-btn">
+                    <i class="fas fa-question-circle"></i>
+                    Help
+                </button>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <div class="game-board">
+                <div class="jackpot-counter pulse">
+                    <i class="fas fa-trophy"></i> Jackpot: <span id="jackpot-amount">50,000</span>
+                </div>
+                <div class="cards-container">
+                    <div class="card-slot">
+                        <div class="card-label">Reel 1</div>
+                        <img id="card1" src="https://deckofcardsapi.com/static/img/back.png" alt="Card 1">
+                    </div>
+                    <div class="reels">SPIN</div>
+                    <div class="card-slot">
+                        <div class="card-label">Reel 2</div>
+                        <img id="card2" src="https://deckofcardsapi.com/static/img/back.png" alt="Card 2">
+                    </div>
+                    <div class="card-slot">
+                        <div class="card-label">Reel 3</div>
+                        <img id="card3" src="https://deckofcardsapi.com/static/img/back.png" alt="Card 3">
+                    </div>
+                </div>
+                
+                <div class="result-display" id="result"></div>
+                
+                <div class="controls">
+                    <button class="btn btn-spin" id="deal-btn">
+                        <i class="fas fa-play"></i>
+                        Spin Reels
+                    </button>
+                    <div class="lever" id="lever">
+                        <i class="fas fa-level-down-alt fa-2x"></i>
+                    </div>
+                    <button class="btn btn-reset" id="reset-btn" disabled>
+                        <i class="fas fa-redo"></i>
+                        New Round
+                    </button>
+                </div>
+                
+                <div class="history">
+                    <div class="history-title">
+                        <i class="fas fa-history"></i>
+                        Win History
+                    </div>
+                    <div class="history-items" id="history-items">
+                        <!-- History items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="betting-panel">
+                <h3 class="panel-title">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Place Your Bet
+                </h3>
+                
+                <div class="bet-options">
+                    <div class="bet-option dragon" id="bet-dragon">
+                        <i class="fas fa-dragon fa-2x"></i>
+                        <div>Dragon Wins</div>
+                        <div class="odds">Pays 2:1</div>
+                    </div>
+                    <div class="bet-option tiger" id="bet-tiger">
+                        <i class="fas fa-paw fa-2x"></i>
+                        <div>Tiger Wins</div>
+                        <div class="odds">Pays 2:1</div>
+                    </div>
+                    <div class="bet-option jackpot" id="bet-jackpot">
+                        <i class="fas fa-equals fa-2x"></i>
+                        <div>Jackpot (Match)</div>
+                        <div class="odds">Pays 10:1 / 50:1</div>
+                    </div>
+                </div>
+                
+                <div class="bet-controls">
+                    <div class="bet-amount">
+                        <label class="amount-label" for="amount">Bet Amount:</label>
+                        <input type="number" id="amount" class="amount-input" min="50" max="10000" value="100">
+                    </div>
+                    
+                    <div class="quick-bets">
+                        <div class="chip" data-amount="50">50</div>
+                        <div class="chip" data-amount="100">100</div>
+                        <div class="chip" data-amount="500">500</div>
+                        <div class="chip" data-amount="1000">1K</div>
+                        <div class="chip" data-amount="5000">5K</div>
+                    </div>
+                </div>
+                
+                <div class="game-info">
+                    <div class="current-bet">
+                        <strong>Current Bet:</strong>
+                        <span id="current-bet-amount">0</span> on
+                        <span id="current-bet-type">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sound-toggle" id="sound-toggle">
+        <i class="fas fa-volume-up"></i>
+    </div>
+    
+    <audio id="dealSound" src="https://www.soundjay.com/mechanical/sounds/card-flip-01.mp3" preload="auto"></audio>
+    <audio id="winSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
+    <audio id="loseSound" src="https://www.soundjay.com/mechanical/sounds/error-02.mp3" preload="auto"></audio>
+    <audio id="chipSound" src="https://www.soundjay.com/mechanical/sounds/chip-stack-01.mp3" preload="auto"></audio>
+    
+    <script>
+        // Game state
+        const gameState = {
+            balance: 10000,
+            currentBet: 0,
+            selectedBet: null,
+            deckId: '',
+            gameInProgress: false,
+            soundEnabled: true,
+            gameHistory: [],
+            jackpot: 50000
+        };
 
-    for (let i = 0; i < 100; i++) {
-      particles.push(new Particle());
-    }
+        // DOM elements
+        const elements = {
+            balance: document.getElementById('balance'),
+            betAmountInput: document.getElementById('amount'),
+            betDragon: document.getElementById('bet-dragon'),
+            betTiger: document.getElementById('bet-tiger'),
+            betJackpot: document.getElementById('bet-jackpot'),
+            card1: document.getElementById('card1'),
+            card2: document.getElementById('card2'),
+            card3: document.getElementById('card3'),
+            resultDisplay: document.getElementById('result'),
+            dealBtn: document.getElementById('deal-btn'),
+            resetBtn: document.getElementById('reset-btn'),
+            lever: document.getElementById('lever'),
+            currentBetAmount: document.getElementById('current-bet-amount'),
+            currentBetType: document.getElementById('current-bet-type'),
+            historyItems: document.getElementById('history-items'),
+            soundToggle: document.getElementById('sound-toggle'),
+            helpBtn: document.getElementById('help-btn'),
+            chips: document.querySelectorAll('.chip'),
+            jackpotAmount: document.getElementById('jackpot-amount')
+        };
 
-    function animateBackground() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-      requestAnimationFrame(animateBackground);
-    }
-    animateBackground();
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
+        // Audio elements
+        const audio = {
+            deal: document.getElementById('dealSound'),
+            win: document.getElementById('winSound'),
+            lose: document.getElementById('loseSound'),
+            chip: document.getElementById('chipSound')
+        };
 
-    function getRandomSymbol() {
-      return symbols[Math.floor(Math.random() * symbols.length)];
-    }
+        // Payout structure
+        const payouts = {
+            dragon: 2,        // Dragon wins: 2:1
+            tiger: 2,         // Tiger wins: 2:1
+            jackpotMatch: 10, // Three of same value or suit: 10:1
+            jackpotAce: 50    // Three Aces: 50:1
+        };
 
-    async function spin() {
-      if (isSpinning) return;
-      isSpinning = true;
+        // Initialize the game
+        async function initGame() {
+            try {
+                showLoading();
+                const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                if (data.success) {
+                    gameState.deckId = data.deck_id;
+                    console.log('New deck created:', gameState.deckId);
+                } else {
+                    throw new Error('Failed to create deck');
+                }
+                hideLoading();
+            } catch (error) {
+                console.error('Error initializing deck:', error);
+                showResult('Error connecting to card server', 'lose');
+                hideLoading();
+                resetGameState();
+            }
+        }
 
-      const bet = parseFloat(document.getElementById('bet').value);
-      const resultDiv = document.getElementById('result');
-      const balanceSpan = document.getElementById('balance');
-      const totalSpinsSpan = document.getElementById('totalSpins');
-      const totalWinsSpan = document.getElementById('totalWins');
-      const reels = [
-        document.getElementById('reel1'),
-        document.getElementById('reel2'),
-        document.getElementById('reel3')
-      ];
+        // Place a bet
+        function placeBet(betType) {
+            if (gameState.gameInProgress) return;
+            
+            playSound(audio.chip);
+            
+            if (gameState.selectedBet) {
+                document.getElementById(`bet-${gameState.selectedBet}`).classList.remove('selected');
+            }
+            
+            gameState.selectedBet = betType;
+            const betElement = document.getElementById(`bet-${gameState.selectedBet}`);
+            betElement.classList.add('selected');
+            betElement.classList.add('animate__animated', 'animate__pulse');
+            
+            setTimeout(() => {
+                betElement.classList.remove('animate__animated', 'animate__pulse');
+            }, 1000);
+            
+            let betValue = parseInt(elements.betAmountInput.value);
+            if (isNaN(betValue)) {
+                betValue = 100;
+                elements.betAmountInput.value = 100;
+            }
+            
+            if (betValue < 50) {
+                betValue = 50;
+                elements.betAmountInput.value = 50;
+            } else if (betValue > 10000) {
+                betValue = 10000;
+                elements.betAmountInput.value = 10000;
+            }
+            
+            if (betValue > gameState.balance) {
+                showResult('Insufficient balance for this bet', 'lose');
+                playSound(audio.lose);
+                gameState.selectedBet = null;
+                betElement.classList.remove('selected');
+                elements.currentBetAmount.textContent = '0';
+                elements.currentBetType.textContent = '-';
+                return;
+            }
+            
+            gameState.currentBet = betValue;
+            
+            elements.currentBetAmount.textContent = gameState.currentBet.toLocaleString();
+            elements.currentBetType.textContent = betType === 'jackpot' ? 'Jackpot' : 
+                betType.charAt(0).toUpperCase() + betType.slice(1) + ' Wins';
+            
+            console.log(`Bet placed: $${gameState.currentBet} on ${gameState.selectedBet}`);
+            
+            if (!gameState.gameInProgress) {
+                elements.dealBtn.disabled = false;
+                elements.lever.style.pointerEvents = 'auto';
+            }
+        }
 
-      if (bet <= 0 || isNaN(bet)) {
-        resultDiv.innerText = 'Please enter a valid bet amount!';
-        resultDiv.classList.remove('result-glow');
-        isSpinning = false;
-        return;
-      }
+        // Draw cards
+        async function drawCards(count) {
+            try {
+                const response = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/draw/?count=${count}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                if (data.success) {
+                    return data.cards;
+                } else {
+                    throw new Error('Failed to draw cards');
+                }
+            } catch (error) {
+                console.error('Error drawing cards:', error);
+                showResult('Error drawing cards', 'lose');
+                return null;
+            }
+        }
 
-      if (bet > balance) {
-        resultDiv.innerText = 'Insufficient balance!';
-        resultDiv.classList.remove('result-glow');
-        isSpinning = false;
-        return;
-      }
+        // Check deck and reshuffle if needed
+        async function checkAndReshuffle() {
+            if (!gameState.deckId) {
+                await initGame();
+                return;
+            }
+            try {
+                const response = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                if (data.success && data.remaining < 10) {
+                    console.log('Low cards remaining, reshuffling...');
+                    const reshuffleResponse = await fetch(`https://deckofcardsapi.com/api/deck/${gameState.deckId}/shuffle/`);
+                    if (!reshuffleResponse.ok) throw new Error(`HTTP error! Status: ${reshuffleResponse.status}`);
+                    const reshuffleData = await reshuffleResponse.json();
+                    if (!reshuffleData.success) throw new Error('Reshuffle failed');
+                }
+            } catch (error) {
+                console.error('Error checking/reshuffling deck:', error);
+                showResult('Deck error. Reinitializing...', 'lose');
+                await initGame();
+            }
+        }
 
-      balance -= bet;
-      balanceSpan.innerText = balance.toFixed(2);
-      totalSpins++;
-      totalSpinsSpan.innerText = totalSpins;
+        // Spin cards
+        async function spinCards() {
+            if (!gameState.selectedBet || gameState.gameInProgress || gameState.currentBet === 0) {
+                showResult('Please place a valid bet first', 'lose');
+                playSound(audio.lose);
+                return;
+            }
+            
+            gameState.gameInProgress = true;
+            elements.dealBtn.disabled = true;
+            elements.lever.style.pointerEvents = 'none';
+            elements.resultDisplay.textContent = '';
+            
+            gameState.balance -= gameState.currentBet;
+            updateBalance();
+            
+            try {
+                showLoading();
+                
+                elements.card1.src = 'https://deckofcardsapi.com/static/img/back.png';
+                elements.card2.src = 'https://deckofcardsapi.com/static/img/back.png';
+                elements.card3.src = 'https://deckofcardsapi.com/static/img/back.png';
+                elements.card1.classList.add('card-deal');
+                elements.card2.classList.add('card-deal');
+                elements.card3.classList.add('card-deal');
+                
+                playSound(audio.deal);
+                
+                await checkAndReshuffle();
+                if (!gameState.deckId) {
+                    gameState.balance += gameState.currentBet;
+                    updateBalance();
+                    resetGameState();
+                    hideLoading();
+                    return;
+                }
+                
+                for (let i = 0; i < 20; i++) {
+                    const tempCards = await drawCards(3);
+                    if (!tempCards) {
+                        gameState.balance += gameState.currentBet;
+                        updateBalance();
+                        resetGameState();
+                        hideLoading();
+                        return;
+                    }
+                    elements.card1.src = tempCards[0].image;
+                    elements.card2.src = tempCards[1].image;
+                    elements.card3.src = tempCards[2].image;
+                    await new Promise(resolve => setTimeout(resolve, 80));
+                }
+                
+                const cards = await drawCards(3);
+                if (!cards || cards.length < 3) {
+                    throw new Error('Failed to draw 3 cards');
+                }
+                
+                setTimeout(() => {
+                    elements.card1.classList.remove('card-deal');
+                    elements.card1.src = cards[0].image;
+                    setTimeout(() => {
+                        elements.card2.classList.remove('card-deal');
+                        elements.card2.src = cards[1].image;
+                        setTimeout(() => {
+                            elements.card3.classList.remove('card-deal');
+                            elements.card3.src = cards[2].image;
+                            playSound(audio.deal);
+                            setTimeout(() => {
+                                determineWinner(cards);
+                                hideLoading();
+                            }, 800);
+                        }, 400);
+                    }, 400);
+                }, 500);
+            } catch (error) {
+                console.error('Error spinning cards:', error);
+                showResult('Error dealing cards', 'lose');
+                playSound(audio.lose);
+                gameState.balance += gameState.currentBet;
+                updateBalance();
+                resetGameState();
+                hideLoading();
+            }
+        }
 
-      reels.forEach(reel => reel.classList.add('spinning'));
-      resultDiv.innerText = 'Spinning...';
-      resultDiv.classList.add('result-glow');
+        // Determine the winner
+        function determineWinner(cards) {
+            const cardValues = {
+                'ACE': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
+                '8': 8, '9': 9, '10': 10, 'JACK': 11, 'QUEEN': 12, 'KING': 13
+            };
+            
+            const values = cards.map(card => cardValues[card.value]);
+            const suits = cards.map(card => card.suit);
+            const card1Value = values[0];
+            const card2Value = values[1];
+            const card3Value = values[2];
+            
+            let winner = '';
+            let winnings = 0;
+            let result = '';
+            let outcomeClass = '';
+            
+            const sameValue = card1Value === card2Value && card2Value === card3Value;
+            const sameSuit = suits[0] === suits[1] && suits[1] === suits[2];
+            const isAce = cards[0].value === 'ACE' && sameValue;
+            
+            if (isAce) {
+                winner = 'Jackpot (Three Aces)';
+                if (gameState.selectedBet === 'jackpot') {
+                    winnings = gameState.currentBet * payouts.jackpotAce;
+                    result = `JACKPOT! Three Aces! You win ${formatCurrency(winnings)}!`;
+                    outcomeClass = 'win';
+                    playSound(audio.win);
+                    elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
+                } else {
+                    result = `JACKPOT! Three Aces! You lose ${formatCurrency(gameState.currentBet)}`;
+                    outcomeClass = 'lose';
+                    playSound(audio.lose);
+                }
+            } else if (sameValue || sameSuit) {
+                winner = 'Jackpot (Match)';
+                if (gameState.selectedBet === 'jackpot') {
+                    winnings = gameState.currentBet * payouts.jackpotMatch;
+                    result = `JACKPOT! Match! You win ${formatCurrency(winnings)}!`;
+                    outcomeClass = 'win';
+                    playSound(audio.win);
+                    elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
+                } else {
+                    result = `JACKPOT! Match! You lose ${formatCurrency(gameState.currentBet)}`;
+                    outcomeClass = 'lose';
+                    playSound(audio.lose);
+                }
+            } else if (card1Value + card3Value > card2Value) {
+                winner = 'Dragon';
+                if (gameState.selectedBet === 'dragon') {
+                    winnings = gameState.currentBet * payouts.dragon;
+                    result = `Dragon WINS! You win ${formatCurrency(winnings)}!`;
+                    outcomeClass = 'win';
+                    playSound(audio.win);
+                    elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
+                } else {
+                    result = `Dragon WINS! You lose ${formatCurrency(gameState.currentBet)}`;
+                    outcomeClass = 'lose';
+                    playSound(audio.lose);
+                }
+            } else {
+                winner = 'Tiger';
+                if (gameState.selectedBet === 'tiger') {
+                    winnings = gameState.currentBet * payouts.tiger;
+                    result = `Tiger WINS! You win ${formatCurrency(winnings)}!`;
+                    outcomeClass = 'win';
+                    playSound(audio.win);
+                    elements.resultDisplay.classList.add('animate__animated', 'animate__tada');
+                } else {
+                    result = `Tiger WINS! You lose ${formatCurrency(gameState.currentBet)}`;
+                    outcomeClass = 'lose';
+                    playSound(audio.lose);
+                }
+            }
+            
+            gameState.balance += winnings;
+            if (outcomeClass === 'win' && gameState.selectedBet === 'jackpot' && isAce) {
+                gameState.balance += gameState.jackpot;
+                result += ` + JACKPOT ${formatCurrency(gameState.jackpot)}!`;
+                gameState.jackpot = 50000; // Reset jackpot
+            } else if (outcomeClass === 'lose') {
+                gameState.jackpot += gameState.currentBet * 0.1; // 10% of bet adds to jackpot
+            }
+            updateBalance();
+            elements.jackpotAmount.textContent = gameState.jackpot.toLocaleString();
+            
+            showResult(result, outcomeClass);
+            
+            addToHistory(winner, outcomeClass);
+            
+            elements.resetBtn.disabled = false;
+            
+            setTimeout(() => {
+                elements.resultDisplay.classList.remove('animate__animated', 'animate__tada');
+            }, 1000);
+        }
 
-      for (let i = 0; i < 35; i++) {
-        reels.forEach(reel => {
-          reel.innerText = getRandomSymbol();
+        // Reset the game
+        function resetGame() {
+            elements.card1.src = 'https://deckofcardsapi.com/static/img/back.png';
+            elements.card2.src = 'https://deckofcardsapi.com/static/img/back.png';
+            elements.card3.src = 'https://deckofcardsapi.com/static/img/back.png';
+            
+            if (gameState.selectedBet) {
+                document.getElementById(`bet-${gameState.selectedBet}`).classList.remove('selected');
+            }
+            gameState.selectedBet = null;
+            gameState.currentBet = 0;
+            
+            elements.resultDisplay.textContent = '';
+            elements.resultDisplay.className = 'result-display';
+            elements.dealBtn.disabled = false;
+            elements.lever.style.pointerEvents = 'auto';
+            elements.resetBtn.disabled = true;
+            elements.currentBetAmount.textContent = '0';
+            elements.currentBetType.textContent = '-';
+            gameState.gameInProgress = false;
+            
+            elements.chips.forEach(chip => chip.classList.remove('active'));
+            
+            checkAndReshuffle();
+        }
+
+        // Update balance display
+        function updateBalance() {
+            elements.balance.textContent = gameState.balance.toLocaleString();
+        }
+
+        // Show result with animation
+        function showResult(message, type) {
+            elements.resultDisplay.textContent = message;
+            elements.resultDisplay.className = 'result-display';
+            elements.resultDisplay.classList.add(type);
+        }
+
+        // Add game to history
+        function addToHistory(winner, outcome) {
+            const historyItem = document.createElement('div');
+            historyItem.className = `history-item ${outcome}`;
+            
+            const icon = document.createElement('i');
+            if (winner.includes('Dragon')) {
+                icon.className = 'fas fa-dragon';
+            } else if (winner.includes('Tiger')) {
+                icon.className = 'fas fa-paw';
+            } else {
+                icon.className = 'fas fa-equals';
+            }
+            
+            const outcomeText = document.createElement('div');
+            outcomeText.className = 'outcome';
+            outcomeText.textContent = outcome === 'win' ? 'Win' : 'Lose';
+            
+            historyItem.appendChild(icon);
+            historyItem.appendChild(outcomeText);
+            
+            historyItem.classList.add('animate__animated', 'animate__fadeIn');
+            
+            elements.historyItems.insertBefore(historyItem, elements.historyItems.firstChild);
+            
+            if (elements.historyItems.children.length > 10) {
+                elements.historyItems.removeChild(elements.historyItems.lastChild);
+            }
+            
+            gameState.gameHistory.unshift({ winner, outcome });
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return '$' + amount.toLocaleString();
+        }
+
+        // Play sound
+        function playSound(sound) {
+            if (gameState.soundEnabled) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log('Sound play prevented:', e));
+            }
+        }
+
+        // Toggle sound
+        function toggleSound() {
+            gameState.soundEnabled = !gameState.soundEnabled;
+            elements.soundToggle.innerHTML = gameState.soundEnabled ? 
+                '<i class="fas fa-volume-up"></i>' : 
+                '<i class="fas fa-volume-mute"></i>';
+        }
+
+        // Show loading state
+        function showLoading() {
+            elements.dealBtn.innerHTML = '<div class="spinner"></div>';
+            elements.dealBtn.disabled = true;
+            elements.lever.style.pointerEvents = 'none';
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            elements.dealBtn.innerHTML = '<i class="fas fa-play"></i> Spin Reels';
+            if (!gameState.gameInProgress && gameState.selectedBet && gameState.currentBet > 0) {
+                elements.dealBtn.disabled = false;
+                elements.lever.style.pointerEvents = 'auto';
+            }
+        }
+
+        // Reset game state (without UI reset)
+        function resetGameState() {
+            gameState.gameInProgress = false;
+            if (gameState.selectedBet && gameState.currentBet > 0) {
+                elements.dealBtn.disabled = false;
+                elements.lever.style.pointerEvents = 'auto';
+            }
+            elements.resetBtn.disabled = true;
+        }
+
+        // Show help
+        function showHelp() {
+            alert(`Card Jackpot Slot Frenzy Rules:
+            
+1. Place your bet on Dragon Wins, Tiger Wins, or Jackpot
+2. Click "Spin Reels" or pull the lever to reveal three cards
+3. Rules:
+   - Dragon Wins: Reel 1 + Reel 3 value > Reel 2 (Pays 2:1)
+   - Tiger Wins: Reel 2 value > Reel 1 + Reel 3 (Pays 2:1)
+   - Jackpot (Match): Three same value or suit (Pays 10:1)
+   - Jackpot (Three Aces): Three Aces (Pays 50:1 + Jackpot!)
+   
+Good luck!`);
+        }
+
+        // Event listeners
+        elements.betDragon.addEventListener('click', () => placeBet('dragon'));
+        elements.betTiger.addEventListener('click', () => placeBet('tiger'));
+        elements.betJackpot.addEventListener('click', () => placeBet('jackpot'));
+        elements.dealBtn.addEventListener('click', spinCards);
+        elements.lever.addEventListener('click', spinCards);
+        elements.resetBtn.addEventListener('click', resetGame);
+        elements.soundToggle.addEventListener('click', toggleSound);
+        elements.helpBtn.addEventListener('click', showHelp);
+        
+        elements.chips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                playSound(audio.chip);
+                elements.chips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                const amount = parseInt(this.dataset.amount);
+                elements.betAmountInput.value = amount;
+                if (gameState.selectedBet) {
+                    placeBet(gameState.selectedBet);
+                }
+            });
         });
-        await new Promise(resolve => setTimeout(resolve, 90));
-      }
-
-      const reel1 = getRandomSymbol();
-      reels[0].innerText = reel1;
-      reels[0].classList.remove('spinning');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      const reel2 = getRandomSymbol();
-      reels[1].innerText = reel2;
-      reels[1].classList.remove('spinning');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      const reel3 = getRandomSymbol();
-      reels[2].innerText = reel3;
-      reels[2].classList.remove('spinning');
-
-      const combo = `${reel1},${reel2},${reel3}`;
-      let winAmount = 0;
-      if (reel1 === reel2 && reel2 === reel3) {
-        winAmount = bet * (payouts[combo] || 2);
-        balance += winAmount;
-        totalWins++;
-        resultDiv.innerText = `JACKPOT! You won $${winAmount.toFixed(2)}! (${payouts[combo]}x)`;
-        resultDiv.classList.add('result-glow');
-        reels.forEach(reel => reel.classList.add('win-flash'));
-        setTimeout(() => reels.forEach(reel => reel.classList.remove('win-flash')), 2500);
-      } else if (reel1 === reel2 || reel2 === reel3 || reel1 === reel3) {
-        winAmount = bet * payouts.partial;
-        balance += winAmount;
-        totalWins++;
-        resultDiv.innerText = `Partial Match! You won $${winAmount.toFixed(2)}! (1.5x)`;
-        resultDiv.classList.add('result-glow');
-        reels.forEach(reel => reel.classList.add('win-flash'));
-        setTimeout(() => reels.forEach(reel => reel.classList.remove('win-flash')), 2500);
-      } else {
-        resultDiv.innerText = 'No win. Try again!';
-        resultDiv.classList.remove('result-glow');
-      }
-
-      balanceSpan.innerText = balance.toFixed(2);
-      totalWinsSpan.innerText = totalWins;
-      isSpinning = false;
-    }
-
-    function resetGame() {
-      if (isSpinning) return;
-      balance = 100.00;
-      totalWins = 0;
-      totalSpins = 0;
-      document.getElementById('balance').innerText = balance.toFixed(2);
-      document.getElementById('totalWins').innerText = totalWins;
-      document.getElementById('totalSpins').innerText = totalSpins;
-      document.getElementById('bet').value = 1;
-      document.getElementById('reel1').innerText = '?';
-      document.getElementById('reel2').innerText = '?';
-      document.getElementById('reel3').innerText = '?';
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerText = 'Game Reset! Ready to Spin!';
-      resultDiv.classList.add('result-glow');
-      setTimeout(() => resultDiv.classList.remove('result-glow'), 2500);
-    }
-  </script>
+        
+        elements.betAmountInput.addEventListener('input', function() {
+            let value = parseInt(this.value);
+            
+            if (isNaN(value)) {
+                value = 100;
+            } else if (value < 50) {
+                value = 50;
+            } else if (value > 10000) {
+                value = 10000;
+            }
+            
+            this.value = value;
+            
+            if (gameState.selectedBet) {
+                placeBet(gameState.selectedBet);
+            }
+        });
+        
+        window.addEventListener('load', () => {
+            updateBalance();
+            elements.jackpotAmount.textContent = gameState.jackpot.toLocaleString();
+            initGame();
+        });
+    </script>
 </body>
 </html>
