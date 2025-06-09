@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Jackpot Slot</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&display=swap');
+    
+    body {
+      font-family: 'Exo 2', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .slot-machine {
+      background: linear-gradient(135deg, rgba(10, 10, 25, 0.9), rgba(25, 25, 50, 0.8));
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(0, 255, 255, 0.3);
+      padding: 50px;
+      border: 4px solid #00ffff;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .slot-machine::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, transparent 60%);
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+    }
+    .reel {
+      width: 160px;
+      height: 160px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      background: linear-gradient(45deg, #1e1e3f, #3b3b6b);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 255, 255, 0.2);
+      border: 3px solid #00ffcc;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .reel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 255, 255, 0.3), transparent);
+      pointer-events: none;
+    }
+    .spinning {
+      animation: spinReel 0.12s linear infinite;
+    }
+    @keyframes spinReel {
+      0% { transform: translateY(30px) rotate(3deg) scale(0.95); opacity: 0.5; }
+      50% { transform: translateY(-30px) rotate(-3deg) scale(1.05); opacity: 0.8; }
+      100% { transform: translateY(30px) rotate(3deg) scale(0.95); opacity: 0.5; }
+    }
+    .win-flash {
+      animation: winFlash 0.3s ease-in-out 5;
+    }
+    @keyframes winFlash {
+      0% { background: linear-gradient(45deg, #1e1e3f, #3b3b6b); border-color: #00ffcc; }
+      50% { background: linear-gradient(45deg, #ff00ff, #00ffff); border-color: #ff00ff; transform: scale(1.1); }
+      100% { background: linear-gradient(45deg, #1e1e3f, #3b3b6b); border-color: #00ffcc; }
+    }
+    .btn-spin {
+      background: linear-gradient(45deg, #ff00ff, #ff66cc);
+      box-shadow: 0 10px 25px rgba(255, 0, 255, 0.6);
+      transition: all 0.4s ease;
+    }
+    .btn-spin:hover {
+      transform: scale(1.15) rotate(4deg);
+      box-shadow: 0 15px 35px rgba(255, 0, 255, 0.8);
+      background: linear-gradient(45deg, #ff66cc, #ff00ff);
+    }
+    .btn-reset {
+      background: linear-gradient(45deg, #00ff99, #00ffcc);
+      box-shadow: 0 10px 25px rgba(0, 255, 153, 0.6);
+      transition: all 0.4s ease;
+    }
+    .btn-reset:hover {
+      transform: scale(1.15) rotate(4deg);
+      box-shadow: 0 15px 35px rgba(0, 255, 153, 0.8);
+      background: linear-gradient(45deg, #00ffcc, #00ff99);
+    }
+    .stats-panel {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      border: 2px solid rgba(0, 255, 255, 0.4);
+    }
+    .result-glow {
+      animation: resultGlow 0.8s ease-in-out infinite;
+    }
+    @keyframes resultGlow {
+      0%, 100% { color: #00ffcc; text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffcc; }
+      50% { color: #ff00ff; text-shadow: 0 0 15px #00ffcc, 0 0 30px #ff00ff; }
+    }
+  </style>
+</head>
+<body>
+  <canvas class="bg-canvas" id="bgCanvas"></canvas>
+  <div class="slot-machine relative z-10">
+    <h1 class="text-6xl font-extrabold text-cyan-300 mb-10 text-center animate__animated animate__bounceIn">Ultimate Jackpot Slot</h1>
+    <div class="flex justify-center gap-10 mb-12">
+      <div class="reel" id="reel1">?</div>
+      <div class="reel" id="reel2">?</div>
+      <div class="reel" id="reel3">?</div>
+    </div>
+    <div class="stats-panel w-full max-w-xl mx-auto mb-10 text-cyan-200">
+      <div class="flex justify-between text-xl">
+        <span>Balance: $</span>
+        <span id="balance" class="font-bold">100.00</span>
+      </div>
+      <div class="flex justify-between text-xl mt-4">
+        <span>Total Wins: </span>
+        <span id="totalWins" class="font-bold">0</span>
+      </div>
+      <div class="flex justify-between text-xl mt-4">
+        <span>Total Spins: </span>
+        <span id="totalSpins" class="font-bold">0</span>
+      </div>
+    </div>
+    <div class="controls w-full max-w-xl mx-auto">
+      <div class="mb-8">
+        <label for="bet" class="block text-cyan-300 font-bold text-xl mb-3">Bet Amount ($):</label>
+        <input type="number" id="bet" value="1" min="0.1" step="0.1" class="w-full p-5 rounded-2xl bg-black bg-opacity-20 text-cyan-100 border border-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-500 animate__animated animate__fadeIn">
+      </div>
+      <div class="flex gap-8 justify-center">
+        <button class="btn-spin text-white font-bold py-5 px-10 rounded-2xl animate__animated animate__jello animate__delay-1s" onclick="spin()">Spin!</button>
+        <button class="btn-reset text-white font-bold py-5 px-10 rounded-2xl animate__animated animate__jello animate__delay-1s" onclick="resetGame()">Reset</button>
+      </div>
+    </div>
+    <div id="result" class="mt-10 text-3xl font-bold text-cyan-300 text-center"></div>
+  </div>
+
+  <script>
+    const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '⭐', '💎', '7'];
+    let balance = 100.00;
+    let totalWins = 0;
+    let totalSpins = 0;
+    let isSpinning = false;
+
+    const payouts = {
+      '7,7,7': 50,    // Jackpot: 50x
+      '💎,💎,💎': 20, // Diamond: 20x
+      '⭐,⭐,⭐': 10,  // Star: 10x
+      '🔔,🔔,🔔': 8,  // Bell: 8x
+      '🍇,🍇,🍇': 5,  // Grapes: 5x
+      '🍊,🍊,🍊': 4,  // Orange: 4x
+      '🍋,🍋,🍋': 3,  // Lemon: 3x
+      '🍒,🍒,🍒': 2,  // Cherry: 2x
+      'partial': 1.5  // Any two matching symbols
+    };
+
+    // Background particle animation
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particles = [];
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 5 + 2;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
+        this.color = `hsl(${Math.random() * 360}, 70%, 50%)`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateBackground() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      requestAnimationFrame(animateBackground);
+    }
+    animateBackground();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    function getRandomSymbol() {
+      return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+
+    async function spin() {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      const bet = parseFloat(document.getElementById('bet').value);
+      const resultDiv = document.getElementById('result');
+      const balanceSpan = document.getElementById('balance');
+      const totalSpinsSpan = document.getElementById('totalSpins');
+      const totalWinsSpan = document.getElementById('totalWins');
+      const reels = [
+        document.getElementById('reel1'),
+        document.getElementById('reel2'),
+        document.getElementById('reel3')
+      ];
+
+      if (bet <= 0 || isNaN(bet)) {
+        resultDiv.innerText = 'Please enter a valid bet amount!';
+        resultDiv.classList.remove('result-glow');
+        isSpinning = false;
+        return;
+      }
+
+      if (bet > balance) {
+        resultDiv.innerText = 'Insufficient balance!';
+        resultDiv.classList.remove('result-glow');
+        isSpinning = false;
+        return;
+      }
+
+      balance -= bet;
+      balanceSpan.innerText = balance.toFixed(2);
+      totalSpins++;
+      totalSpinsSpan.innerText = totalSpins;
+
+      reels.forEach(reel => reel.classList.add('spinning'));
+      resultDiv.innerText = 'Spinning...';
+      resultDiv.classList.add('result-glow');
+
+      for (let i = 0; i < 35; i++) {
+        reels.forEach(reel => {
+          reel.innerText = getRandomSymbol();
+        });
+        await new Promise(resolve => setTimeout(resolve, 90));
+      }
+
+      const reel1 = getRandomSymbol();
+      reels[0].innerText = reel1;
+      reels[0].classList.remove('spinning');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      const reel2 = getRandomSymbol();
+      reels[1].innerText = reel2;
+      reels[1].classList.remove('spinning');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      const reel3 = getRandomSymbol();
+      reels[2].innerText = reel3;
+      reels[2].classList.remove('spinning');
+
+      const combo = `${reel1},${reel2},${reel3}`;
+      let winAmount = 0;
+      if (reel1 === reel2 && reel2 === reel3) {
+        winAmount = bet * (payouts[combo] || 2);
+        balance += winAmount;
+        totalWins++;
+        resultDiv.innerText = `JACKPOT! You won $${winAmount.toFixed(2)}! (${payouts[combo]}x)`;
+        resultDiv.classList.add('result-glow');
+        reels.forEach(reel => reel.classList.add('win-flash'));
+        setTimeout(() => reels.forEach(reel => reel.classList.remove('win-flash')), 2500);
+      } else if (reel1 === reel2 || reel2 === reel3 || reel1 === reel3) {
+        winAmount = bet * payouts.partial;
+        balance += winAmount;
+        totalWins++;
+        resultDiv.innerText = `Partial Match! You won $${winAmount.toFixed(2)}! (1.5x)`;
+        resultDiv.classList.add('result-glow');
+        reels.forEach(reel => reel.classList.add('win-flash'));
+        setTimeout(() => reels.forEach(reel => reel.classList.remove('win-flash')), 2500);
+      } else {
+        resultDiv.innerText = 'No win. Try again!';
+        resultDiv.classList.remove('result-glow');
+      }
+
+      balanceSpan.innerText = balance.toFixed(2);
+      totalWinsSpan.innerText = totalWins;
+      isSpinning = false;
+    }
+
+    function resetGame() {
+      if (isSpinning) return;
+      balance = 100.00;
+      totalWins = 0;
+      totalSpins = 0;
+      document.getElementById('balance').innerText = balance.toFixed(2);
+      document.getElementById('totalWins').innerText = totalWins;
+      document.getElementById('totalSpins').innerText = totalSpins;
+      document.getElementById('bet').value = 1;
+      document.getElementById('reel1').innerText = '?';
+      document.getElementById('reel2').innerText = '?';
+      document.getElementById('reel3').innerText = '?';
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerText = 'Game Reset! Ready to Spin!';
+      resultDiv.classList.add('result-glow');
+      setTimeout(() => resultDiv.classList.remove('result-glow'), 2500);
+    }
+  </script>
+</body>
+</html>
