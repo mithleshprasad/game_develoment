@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>32-Card Game | Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./32-card-game.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-cards"></i>
+                <span>32-Card Game</span>
+            </div>
+            <div class="user-panel">
+                <div class="balance">
+                    <i class="fas fa-coins"></i>
+                    <span id="balance">10,000</span>
+                </div>
+                <button class="btn btn-secondary" id="help-btn">
+                    <i class="fas fa-question-circle"></i>
+                    Help
+                </button>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <div class="game-board">
+                <div class="cards-container">
+                    <div class="card-slot">
+                        <div class="player-label">Player</div>
+                        <img id="player-card-1" src="https://deckofcardsapi.com/static/img/back.png" alt="Player Card 1">
+                        <div class="hand-strength" id="player-strength"></div>
+                    </div>
+                    <div class="card-slot">
+                        <img id="player-card-2" src="https://deckofcardsapi.com/static/img/back.png" alt="Player Card 2">
+                    </div>
+                    <div class="card-slot">
+                        <img id="player-card-3" src="https://deckofcardsapi.com/static/img/back.png" alt="Player Card 3">
+                    </div>
+                    
+                    <div class="card-slot">
+                        <div class="player-label">Banker</div>
+                        <img id="banker-card-1" src="https://deckofcardsapi.com/static/img/back.png" alt="Banker Card 1">
+                        <div class="hand-strength" id="banker-strength"></div>
+                    </div>
+                    <div class="card-slot">
+                        <img id="banker-card-2" src="https://deckofcardsapi.com/static/img/back.png" alt="Banker Card 2">
+                    </div>
+                    <div class="card-slot">
+                        <img id="banker-card-3" src="https://deckofcardsapi.com/static/img/back.png" alt="Banker Card 3">
+                    </div>
+                </div>
+                
+                <div class="result-display" id="result"></div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" id="deal-btn">
+                        <i class="fas fa-play"></i>
+                        Deal Cards
+                    </button>
+                    <button class="btn btn-secondary" id="reset-btn" disabled>
+                        <i class="fas fa-redo"></i>
+                        New Round
+                    </button>
+                </div>
+                
+                <div class="history">
+                    <div class="history-title">
+                        <i class="fas fa-history"></i>
+                        Game History
+                    </div>
+                    <div class="history-items" id="history-items">
+                        <!-- History items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="betting-panel">
+                <h3 class="panel-title">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Place Your Bet
+                </h3>
+                
+                <div class="bet-options">
+                    <div class="bet-option player" id="bet-player">
+                        <i class="fas fa-user fa-2x"></i>
+                        <div>Player</div>
+                        <div class="odds">Pays 1:1</div>
+                    </div>
+                    <div class="bet-option banker" id="bet-banker">
+                        <i class="fas fa-university fa-2x"></i>
+                        <div>Banker</div>
+                        <div class="odds">Pays 1:1</div>
+                    </div>
+                    <div class="bet-option tie" id="bet-tie">
+                        <i class="fas fa-equals fa-2x"></i>
+                        <div>Tie</div>
+                        <div class="odds">Pays 8:1</div>
+                    </div>
+                </div>
+                
+                <div class="bet-controls">
+                    <div class="bet-amount">
+                        <label class="amount-label" for="amount">Bet Amount:</label>
+                        <input type="number" id="amount" class="amount-input" min="50" max="10000" value="100">
+                    </div>
+                    
+                    <div class="quick-bets">
+                        <div class="chip" data-amount="50">50</div>
+                        <div class="chip" data-amount="100">100</div>
+                        <div class="chip" data-amount="500">500</div>
+                        <div class="chip" data-amount="1000">1K</div>
+                        <div class="chip" data-amount="5000">5K</div>
+                    </div>
+                </div>
+                
+                <div class="game-info">
+                    <div class="current-bet">
+                        <strong>Current Bet:</strong>
+                        <span id="current-bet-amount">0</span> on
+                        <span id="current-bet-type">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sound-toggle" id="sound-toggle">
+        <i class="fas fa-volume-up"></i>
+    </div>
+    
+    <audio id="dealSound" src="https://www.soundjay.com/mechanical/sounds/card-flip-01.mp3" preload="auto"></audio>
+    <audio id="winSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
+    <audio id="loseSound" src="https://www.soundjay.com/mechanical/sounds/error-02.mp3" preload="auto"></audio>
+    <audio id="chipSound" src="https://www.soundjay.com/mechanical/sounds/chip-stack-01.mp3" preload="auto"></audio>
+    
+  <script src="./32-card-game.js"></script>
+</body>
+</html>
